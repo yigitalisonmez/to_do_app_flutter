@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
   String? taskName;
-  final void Function(String) addButtonCallback;
-
-  AddTaskScreen({required this.addButtonCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +30,14 @@ class AddTaskScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   taskName = value;
-                  print('taskName:$taskName');
                 },
               ),
               SizedBox(height: 20.0),
               ElevatedButton(
-                  //TODO on pressed
                   onPressed: () {
-                    addButtonCallback(taskName!);
+                    Provider.of<TaskData>(context, listen: false)
+                        .addTask(taskName!);
+
                     Navigator.pop(context);
                   },
                   child: Text(
