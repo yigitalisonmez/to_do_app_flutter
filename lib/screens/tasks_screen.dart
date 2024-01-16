@@ -7,15 +7,6 @@ import 'package:provider/provider.dart';
 import '../models/task_data.dart';
 
 class TasksScreen extends StatelessWidget {
-  void addButtonCallback(String taskName) {
-    //Provider.of<TaskData>(context).addTask(taskName);
-
-    /*
-    setState(() {
-      Provider.of<TaskData>(context).tasks.add(Task(name: taskName));
-    });*/
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
