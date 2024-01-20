@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDgXl-BE9kbLyGDLX2UsEA7GH-RFz7al0Y</string>
+	<key>GCM_SENDER_ID</key>
+	<string>620382207360</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.todoeyFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>to-do-om-da965</string>
+	<key>STORAGE_BUCKET</key>
+	<string>to-do-om-da965.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:620382207360:ios:296c7c0a3549a52f1b5565</string>
+</dict>
+</plist>

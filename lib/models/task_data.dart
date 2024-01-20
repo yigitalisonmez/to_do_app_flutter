@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class TaskData extends ChangeNotifier {
+  final FirebaseFirestore _database = FirebaseFirestore.instance;
+
   List<Task> _tasks = [
     Task(name: 'Go to gym'),
     Task(name: 'Buy new pair of shoes'),
@@ -14,6 +16,7 @@ class TaskData extends ChangeNotifier {
   }
 
   List<Task> getTasksList() {
+    _database.collection('tasks').snapshots();
     return _tasks;
   }
 
