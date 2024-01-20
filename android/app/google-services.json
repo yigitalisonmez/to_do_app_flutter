@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620382207360",
+    "project_id": "to-do-om-da965",
+    "storage_bucket": "to-do-om-da965.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620382207360:android:82e35e0746de2ac11b5565",
+        "android_client_info": {
+          "package_name": "com.example.todoom_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPaRKORHUzfenbNqywnEcQVZSvWPdI3J0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
