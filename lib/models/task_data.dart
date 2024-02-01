@@ -23,6 +23,7 @@ class TaskData extends ChangeNotifier {
       'taskState': task.taskState,
       'time': task.time
     });
+    taskNumber++;
     notifyListeners();
   }
 
@@ -33,7 +34,9 @@ class TaskData extends ChangeNotifier {
     collection.doc(uuid).update({'taskState': !currTaskState});
   }
 
-  void deleteTask(int index) {
+  void deleteTask({required String uuid}) {
+    collection.doc(uuid).delete();
+    taskNumber--;
     notifyListeners();
   }
 }

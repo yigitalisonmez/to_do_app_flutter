@@ -37,7 +37,8 @@ class TaskList extends StatelessWidget {
                 );
               },
               deleteTaskCallback: () {
-                Provider.of<TaskData>(context, listen: false).deleteTask(index);
+                Provider.of<TaskData>(context, listen: false)
+                    .deleteTask(uuid: currentTask['uuid']);
               },
             );
           },

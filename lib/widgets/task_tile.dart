@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TaskTile extends StatelessWidget {
@@ -22,11 +23,19 @@ class TaskTile extends StatelessWidget {
             decoration:
                 isChecked ? TextDecoration.lineThrough : TextDecoration.none),
       ),
-      trailing: Checkbox(
+      leading: Checkbox(
         value: isChecked,
         onChanged: checkboxCallback, //TODO
         //checkboxCallback:
       ),
+      trailing: IconButton(
+        onPressed: deleteTaskCallback,
+        icon: Icon(
+          Icons.delete,
+          color: Colors.red,
+        ),
+      ),
+      //style: ListTileStyle(),
     );
   }
 }
