@@ -1,10 +1,27 @@
-class Task {
-  final String name;
-  bool isCompleted;
+import 'package:uuid/uuid.dart';
 
-  Task({required this.name, this.isCompleted = false});
+class Task {
+  final String uuid = const Uuid().v1();
+  final String taskDescription;
+  DateTime time;
+  bool taskState = false;
+
+  Task({
+    uuid,
+    required this.taskDescription,
+    required this.time,
+    required this.taskState,
+  });
 
   void changeTaskState() {
-    isCompleted = !isCompleted;
+    taskState = !taskState;
+  }
+
+  Task jsonMapToObject(Map<String, dynamic> task) {
+    return Task(
+        uuid: task['uuid'],
+        taskDescription: task['taskDescription'],
+        time: DateTime.now(),
+        taskState: task['taskState']);
   }
 }

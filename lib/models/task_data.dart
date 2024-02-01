@@ -1,37 +1,40 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:todoey_flutter/models/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class TaskData extends ChangeNotifier {
-  final FirebaseFirestore _database = FirebaseFirestore.instance;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
+      FirebaseFirestore.instance.collection('tasks').snapshots();
 
-  List<Task> _tasks = [
-    Task(name: 'Go to gym'),
-    Task(name: 'Buy new pair of shoes'),
-  ];
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('tasks');
 
-  int get taskNumber {
-    return _tasks.length;
+  int taskNumber = 0;
+
+  Future<int> getTaskNumber() async {
+    return await stream!.length;
   }
 
-  List<Task> getTasksList() {
-    _database.collection('tasks').snapshots();
-    return _tasks;
-  }
-
-  void addTask(String taskName) {
-    _tasks.add(Task(name: taskName));
+  void addTask(Task task) async {
+    collection.doc(task.uuid).set({
+      'uuid': task.uuid,
+      'taskDescription': task.taskDescription,
+      'taskState': task.taskState,
+      'time': task.time
+    });
     notifyListeners();
   }
 
-  void changeTaskStatus(int index) {
-    _tasks[index].changeTaskState();
-    notifyListeners();
+  void changeTaskStatus({
+    required String uuid,
+    required bool currTaskState,
+  }) async {
+    collection.doc(uuid).update({'taskState': !currTaskState});
   }
 
   void deleteTask(int index) {
-    _tasks.removeAt(index);
+    //_tasks.removeAt(index);
     notifyListeners();
   }
 }
