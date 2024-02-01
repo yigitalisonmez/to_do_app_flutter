@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  String? taskName;
+  String? taskTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +30,16 @@ class AddTaskScreen extends StatelessWidget {
                 autofocus: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                  taskName = value;
+                  taskTitle = value;
                 },
               ),
               SizedBox(height: 20.0),
               ElevatedButton(
                   onPressed: () {
-                    Provider.of<TaskData>(context, listen: false)
-                        .addTask(taskName!);
+                    Provider.of<TaskData>(context, listen: false).addTask(Task(
+                        taskDescription: taskTitle!,
+                        time: DateTime.now(),
+                        taskState: false));
 
                     Navigator.pop(context);
                   },

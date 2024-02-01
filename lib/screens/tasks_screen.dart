@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
-import '../models/task.dart';
+import '../models/task_data.dart';
 import 'package:provider/provider.dart';
 
-import '../models/task_data.dart';
-
 class TasksScreen extends StatelessWidget {
+  const TasksScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.lightBlueAccent,
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Colors.white,
           ),
@@ -30,17 +30,17 @@ class TasksScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 30.0,
                   child: Icon(
                     Icons.list,
                     size: 30.0,
                     color: Colors.lightBlueAccent,
                   ),
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
                 ),
-                SizedBox(height: 10.0),
-                Text(
+                const SizedBox(height: 10.0),
+                const Text(
                   'Todoey',
                   style: TextStyle(
                       color: Colors.white,
@@ -49,15 +49,15 @@ class TasksScreen extends StatelessWidget {
                 ),
                 Text(
                   '${Provider.of<TaskData>(context).taskNumber} Tasks',
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                  style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
             ),
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
