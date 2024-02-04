@@ -10,11 +10,15 @@ class TaskData extends ChangeNotifier {
   CollectionReference collection =
       FirebaseFirestore.instance.collection('tasks');
 
+  List<Task> tasks = [];
+
   int taskNumber = 0;
 
   Future<int> getTaskNumber() async {
     return await stream!.length;
   }
+
+  static Future<void> loadTasks() async {}
 
   void addTask(Task task) async {
     collection.doc(task.uuid).set({

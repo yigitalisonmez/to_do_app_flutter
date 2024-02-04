@@ -4,6 +4,7 @@ import 'firebase_options.dart';
 import 'screens/tasks_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'helper/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => TaskData(),
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: lightMode,
+        darkTheme: darkMode,
         home: TasksScreen(),
       ),
     );
