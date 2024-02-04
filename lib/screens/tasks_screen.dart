@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/helper/theme_constants.dart';
+import 'package:todoey_flutter/helper/theme_provider.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import '../models/task_data.dart';
@@ -10,13 +13,8 @@ class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
+          child: Icon(CupertinoIcons.add, weight: 10.0, color: Colors.white),
           onPressed: () {
             showModalBottomSheet(
                 builder: (context) => AddTaskScreen(), context: context);
@@ -31,12 +29,20 @@ class TasksScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Provider.of<ThemeProvider>(context).isDark
+                      ? kIconButtonBackgroundColorDark
+                      : kIconButtonBackgroundColorLight,
                   radius: 30.0,
-                  child: Icon(
-                    Icons.list,
-                    size: 30.0,
-                    color: Theme.of(context).colorScheme.secondary,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.list,
+                      size: 30.0,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    },
                   ),
                 ),
                 const SizedBox(height: 10.0),
@@ -57,8 +63,8 @@ class TasksScreen extends StatelessWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: const BoxDecoration(
-                  color: Colors.white,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),

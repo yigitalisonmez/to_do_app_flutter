@@ -14,9 +14,9 @@ class TaskData extends ChangeNotifier {
 
   int taskNumber = 0;
 
-  Future<int> getTaskNumber() async {
+/*  Future<int> getTaskNumber() async {
     return await stream!.length;
-  }
+  }*/
 
   static Future<void> loadTasks() async {}
 
