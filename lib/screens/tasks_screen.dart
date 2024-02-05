@@ -6,7 +6,8 @@ import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import '../models/task_data.dart';
 import 'package:provider/provider.dart';
-import 'package:sidebarx/sidebarx.dart';
+
+part 'sub_view/custom_drawer.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -41,8 +42,8 @@ class TasksScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme();
+                      /// theme değiştirme şimdlik askıya alındı
+                      //Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
                     },
                   ),
                 ),
@@ -74,6 +75,9 @@ class TasksScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: Drawer(),
       ),
     );
   }
