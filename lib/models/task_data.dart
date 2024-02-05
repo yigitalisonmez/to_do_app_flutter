@@ -10,15 +10,28 @@ class TaskData extends ChangeNotifier {
   CollectionReference collection =
       FirebaseFirestore.instance.collection('tasks');
 
-  List<Task> tasks = [];
+  List<Task> taskList = [];
 
   int taskNumber = 0;
 
-/*  Future<int> getTaskNumber() async {
-    return await stream!.length;
-  }*/
+  bool isLoading = true;
 
-  static Future<void> loadTasks() async {}
+/*  Stream<QuerySnapshot<Object?>>? loadTasks() {
+    Stream<QuerySnapshot<Object?>>? taskStream = FirebaseFirestore.instance
+        .collection("tasks")
+        .orderBy('time', descending: true)
+        .snapshots();
+
+    taskStream.listen((snapshot) {
+      for (var doc in snapshot.docs) {
+        Task userTask = Task(uuid: doc.data());
+
+        taskList.add(userTask);
+      }
+    });
+
+    return taskStream;
+  }*/
 
   void addTask(Task task) async {
     collection.doc(task.uuid).set({
@@ -36,11 +49,25 @@ class TaskData extends ChangeNotifier {
     required bool currTaskState,
   }) async {
     collection.doc(uuid).update({'taskState': !currTaskState});
+    notifyListeners();
   }
 
   void deleteTask({required String uuid}) {
     collection.doc(uuid).delete();
     taskNumber--;
+    notifyListeners();
+  }
+
+  void editTask({
+    required String uuid,
+    required String newTaskDescription,
+  }) {
+    collection.doc(uuid).update({'taskDescription': newTaskDescription});
+    notifyListeners();
+  }
+
+  void setTaskNumber({required int snapshotSize}) {
+    taskNumber = snapshotSize;
     notifyListeners();
   }
 }

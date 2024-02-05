@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey_flutter/helper/theme_provider.dart';
 import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 
@@ -9,7 +10,9 @@ class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff757575),
+      color: Provider.of<ThemeProvider>(context).isDark
+          ? Color(0xff141415)
+          : Color(0xff676c70),
       child: Container(
         decoration: const BoxDecoration(
             color: Colors.white,
@@ -24,9 +27,13 @@ class AddTaskScreen extends StatelessWidget {
               Text(
                 'Add Task',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30.0),
+                style: TextStyle(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    fontSize: 30.0),
               ),
               TextField(
+                style: TextStyle(color: Colors.black),
+                cursorColor: Colors.black,
                 autofocus: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -48,7 +55,9 @@ class AddTaskScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20.0, color: Colors.white),
                   ),
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.lightBlueAccent, elevation: 10.0))
+                      backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                      elevation: 10.0))
             ],
           ),
         ),

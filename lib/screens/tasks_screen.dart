@@ -6,6 +6,7 @@ import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import '../models/task_data.dart';
 import 'package:provider/provider.dart';
+import 'package:sidebarx/sidebarx.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -14,7 +15,7 @@ class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          child: Icon(CupertinoIcons.add, weight: 10.0, color: Colors.white),
+          child: const Icon(CupertinoIcons.add, color: Colors.white),
           onPressed: () {
             showModalBottomSheet(
                 builder: (context) => AddTaskScreen(), context: context);

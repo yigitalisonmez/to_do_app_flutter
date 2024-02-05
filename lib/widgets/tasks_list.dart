@@ -9,7 +9,10 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection("tasks").snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('tasks')
+          .orderBy('time', descending: true)
+          .snapshots(),
       builder: (BuildContext ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -24,7 +27,7 @@ class TaskList extends StatelessWidget {
         int snapshotSize = snapshot.data!.size;
         Provider.of<TaskData>(context).taskNumber = snapshotSize;
         return ListView.builder(
-          itemCount: snapshotSize,
+          itemCount: Provider.of<TaskData>(context).taskNumber,
           itemBuilder: (_, int index) {
             dynamic currentTask = snapshot.data!.docs[index].data();
             return TaskTile(
@@ -39,6 +42,48 @@ class TaskList extends StatelessWidget {
               deleteTaskCallback: () {
                 Provider.of<TaskData>(context, listen: false)
                     .deleteTask(uuid: currentTask['uuid']);
+              },
+              editTaskCallback: () {
+                String? newTaskDescription;
+                showDialog(
+                    context: context,
+                    builder: (builder) => Dialog(
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Enter new task description'),
+                                const SizedBox(height: 15),
+                                TextField(
+                                  cursorColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  autofocus: true,
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    newTaskDescription = value;
+                                  },
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Provider.of<TaskData>(context,
+                                            listen: false)
+                                        .editTask(
+                                            uuid: currentTask['uuid'],
+                                            newTaskDescription:
+                                                newTaskDescription!);
+
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Submit'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ));
               },
             );
           },
