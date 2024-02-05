@@ -1,20 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/helper/theme_constants.dart';
 import 'package:todoey_flutter/helper/theme_provider.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import '../models/task_data.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 part 'sub_view/custom_drawer.dart';
 
-class TasksScreen extends StatelessWidget {
-  const TasksScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  static String homeScreenPath = '/';
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: Drawer(
+        child: Container(
+          child: ListView(
+            children: [
+              const DrawerHeader(
+                  child: CircleAvatar(
+                backgroundImage: AssetImage('assets/avatar.jpeg'),
+              )),
+              ListTile(
+                leading: Icon(CupertinoIcons.home),
+                title: Text('Home'),
+                onTap: () {
+                  /// Yanlış bir kullanım
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.edit_calendar),
+                title: Text('Routines'),
+              ),
+              ListTile(
+                leading: Icon(Icons.sticky_note_2),
+                title: Text('Notes'),
+              ),
+              ListTile(
+                leading: Icon(CupertinoIcons.book),
+                title: Text('Journal'),
+              ),
+              ListTile(
+                leading: Icon(Icons.brightness_6_rounded),
+                title: Text('Change Theme'),
+                onTap: () {
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .toggleTheme();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
           child: const Icon(CupertinoIcons.add, color: Colors.white),
           onPressed: () {
@@ -30,21 +72,14 @@ class TasksScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundColor: Provider.of<ThemeProvider>(context).isDark
-                      ? kIconButtonBackgroundColorDark
-                      : kIconButtonBackgroundColorLight,
-                  radius: 30.0,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.list,
-                      size: 30.0,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      /// theme değiştirme şimdlik askıya alındı
-                      //Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-                    },
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    '${DateFormat('EEE dd , MMM').format(DateTime.now())} ',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300),
                   ),
                 ),
                 const SizedBox(height: 10.0),
@@ -75,9 +110,6 @@ class TasksScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      drawer: Drawer(
-        child: Drawer(),
       ),
     );
   }

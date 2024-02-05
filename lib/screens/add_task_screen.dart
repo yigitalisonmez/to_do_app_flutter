@@ -5,6 +5,7 @@ import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
+  static String addTaskScreenPath = '/add-task-screen';
   String? taskTitle;
 
   @override

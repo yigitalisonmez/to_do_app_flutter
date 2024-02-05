@@ -13,7 +13,8 @@ const kCheckboxFillColorLight = Color(0xffc2cef9);
 
 const kCheckboxCheckColorDark = Colors.white;
 const kCheckboxCheckColorLight = Colors.black;
-//
+
+const kDrawerColorLight = Color(0xffc2cef9);
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
@@ -25,11 +26,9 @@ ThemeData lightMode = ThemeData(
   ),
   scaffoldBackgroundColor: kScaffoldBackgroundColorLight,
 
-  ///ICON BUTTON
-  iconButtonTheme: const IconButtonThemeData(
-      style: ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll<Color>(
-              kIconButtonBackgroundColorLight))),
+  ///APPBAR THEME
+  appBarTheme:
+      const AppBarTheme(backgroundColor: kScaffoldBackgroundColorLight),
 
   ///FLOATING ACTION BUTTON
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -59,6 +58,9 @@ ThemeData lightMode = ThemeData(
       borderRadius: BorderRadius.circular(15.0),
     ),
   ),
+
+  ///DRAWER THEME
+  drawerTheme: DrawerThemeData(backgroundColor: kDrawerColorLight),
 );
 
 ThemeData darkMode = ThemeData(
@@ -70,13 +72,6 @@ ThemeData darkMode = ThemeData(
       secondary: Colors.grey.shade700,
       tertiary: TERTIARY_COLOR_DARK),
   scaffoldBackgroundColor: kScaffoldBackgroundColorDark,
-
-  /// ICON BUTTON
-  iconButtonTheme: const IconButtonThemeData(
-    style: ButtonStyle(
-        backgroundColor:
-            MaterialStatePropertyAll<Color>(kIconButtonBackgroundColorDark)),
-  ),
 
   ///FLOATING ACTION BUTTON
   floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -91,7 +86,7 @@ ThemeData darkMode = ThemeData(
 
   ///INPUT DECORATION
   inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(),
+    border: const OutlineInputBorder(),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
@@ -105,4 +100,7 @@ ThemeData darkMode = ThemeData(
       borderRadius: BorderRadius.circular(15.0),
     ),
   ),
+
+  ///APP BAR THEME
+  appBarTheme: AppBarTheme(backgroundColor: kScaffoldBackgroundColorDark),
 );

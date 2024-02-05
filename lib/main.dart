@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helper/theme_provider.dart';
 import 'package:todoey_flutter/models/task_data.dart';
+import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'firebase_options.dart';
-import 'screens/tasks_screen.dart';
+import 'screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'helper/theme_constants.dart';
@@ -21,8 +22,12 @@ class MyApp extends StatelessWidget {
       create: (context) => TaskData(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          HomeScreen.homeScreenPath: (context) => const HomeScreen(),
+          AddTaskScreen.addTaskScreenPath: (context) => AddTaskScreen(),
+        },
         theme: Provider.of<ThemeProvider>(context).currTheme,
-        home: TasksScreen(),
       ),
     );
   }
