@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/helper/theme_provider.dart';
-import 'package:todoey_flutter/models/task.dart';
-import 'package:todoey_flutter/models/task_data.dart';
+import 'package:todoey_flutter/models/task/task.dart';
+import 'package:todoey_flutter/models/task/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
   static String addTaskScreenPath = '/add-task-screen';
@@ -38,10 +38,10 @@ class AddTaskScreen extends StatelessWidget {
                 autofocus: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                  taskTitle = value;
+                  taskTitle = value ?? taskTitle;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                   onPressed: () {
                     Provider.of<TaskData>(context, listen: false).addTask(Task(
@@ -51,14 +51,14 @@ class AddTaskScreen extends StatelessWidget {
 
                     Navigator.pop(context);
                   },
-                  child: Text(
-                    'Add',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
                   style: TextButton.styleFrom(
                       backgroundColor:
                           Theme.of(context).scaffoldBackgroundColor,
-                      elevation: 10.0))
+                      elevation: 10.0),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ))
             ],
           ),
         ),

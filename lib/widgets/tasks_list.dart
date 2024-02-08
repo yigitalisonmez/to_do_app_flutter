@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'task_tile.dart';
-import 'package:todoey_flutter/models/task_data.dart';
+import 'package:todoey_flutter/models/task/task_data.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({super.key});

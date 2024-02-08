@@ -28,14 +28,14 @@ class TaskTile extends StatelessWidget {
       ),
       leading: Checkbox(
         value: isChecked,
-        onChanged: checkboxCallback, //TODO
+        onChanged: checkboxCallback,
         //checkboxCallback:
       ),
       trailing: IconButton(
         onPressed: deleteTaskCallback,
         icon: Icon(
           Icons.delete,
-          color: Colors.red,
+          color: Color(0xffd94d3c),
         ),
       ),
       //style: ListTileStyle(),

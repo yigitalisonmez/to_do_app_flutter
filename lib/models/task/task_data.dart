@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/models/task.dart';
+import 'package:todoey_flutter/models/task/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todoey_flutter/screens/home_screen/home_screen.dart';
 
 class TaskData extends ChangeNotifier {
-  Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
+  final Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
       FirebaseFirestore.instance.collection('tasks').snapshots();
 
-  CollectionReference collection =
+  static CollectionReference collection =
       FirebaseFirestore.instance.collection('tasks');
 
   List<Task> taskList = [];
@@ -16,22 +17,15 @@ class TaskData extends ChangeNotifier {
 
   bool isLoading = true;
 
-/*  Stream<QuerySnapshot<Object?>>? loadTasks() {
-    Stream<QuerySnapshot<Object?>>? taskStream = FirebaseFirestore.instance
-        .collection("tasks")
-        .orderBy('time', descending: true)
-        .snapshots();
-
-    taskStream.listen((snapshot) {
-      for (var doc in snapshot.docs) {
-        Task userTask = Task(uuid: doc.data());
-
-        taskList.add(userTask);
-      }
-    });
-
-    return taskStream;
-  }*/
+  loadTasks(BuildContext ctx) async {
+    isLoading = true;
+    QuerySnapshot<Object?> documents = await collection.get();
+    isLoading = false;
+    taskNumber = documents.size;
+    Navigator.popAndPushNamed(ctx, HomeScreen.homeScreenPath);
+    notifyListeners();
+    return null;
+  }
 
   void addTask(Task task) async {
     collection.doc(task.uuid).set({
