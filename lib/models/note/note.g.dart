@@ -18,20 +18,23 @@ class NoteAdapter extends TypeAdapter<Note> {
     };
     return Note(
       id: fields[0] as String,
-      content: fields[1] as String,
-      date: fields[2] as DateTime,
+      title: fields[1] as String,
+      content: fields[2] as String,
+      date: fields[3] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Note obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.content)
+      ..write(obj.title)
       ..writeByte(2)
+      ..write(obj.content)
+      ..writeByte(3)
       ..write(obj.date);
   }
 

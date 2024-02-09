@@ -15,6 +15,7 @@ const kCheckboxCheckColorLight = Colors.black;
 const kDrawerColorLight = Color(0xffc2cef9);
 
 ThemeData lightMode = ThemeData(
+  textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black),
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
     background: kScaffoldBackgroundColorLight,
@@ -62,6 +63,7 @@ ThemeData lightMode = ThemeData(
 );
 
 ThemeData darkMode = ThemeData(
+  textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
   brightness: Brightness.dark,
   colorScheme: ColorScheme.dark(
       brightness: Brightness.dark,
@@ -101,4 +103,6 @@ ThemeData darkMode = ThemeData(
 
   ///APP BAR THEME
   appBarTheme: const AppBarTheme(backgroundColor: kScaffoldBackgroundColorDark),
+
+  ///TEXT THEME
 );

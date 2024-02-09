@@ -9,6 +9,7 @@ class NoteData extends ChangeNotifier {
   NoteData() {
     _initNoteBox();
   }
+  int boxLength = -1;
 
   ///BASIC CRUD OPERATIONS
 
@@ -43,6 +44,7 @@ class NoteData extends ChangeNotifier {
 
   void _initNoteBox() async {
     noteBox = await Hive.openBox('my_notes');
+    boxLength = noteBox.length;
     notifyListeners();
   }
 }

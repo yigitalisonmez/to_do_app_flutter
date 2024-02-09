@@ -4,6 +4,7 @@ import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
 import 'package:todoey_flutter/models/task/task_data.dart';
 import 'package:todoey_flutter/screens/add_task_screen/add_task_screen.dart';
+
 import 'package:todoey_flutter/screens/notes_screen/notes_screen.dart';
 import 'package:todoey_flutter/screens/splash_screen/splash_screen.dart';
 
@@ -25,7 +26,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(ChangeNotifierProvider(
-      create: (context) => ThemeProvider(), child: MyApp()));
+      create: (context) => ThemeProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

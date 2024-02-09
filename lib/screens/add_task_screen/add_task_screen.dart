@@ -21,7 +21,7 @@ class AddTaskScreen extends StatelessWidget {
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0))),
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -38,7 +38,7 @@ class AddTaskScreen extends StatelessWidget {
                 autofocus: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                  taskTitle = value ?? taskTitle;
+                  taskTitle = value;
                 },
               ),
               const SizedBox(height: 20.0),
