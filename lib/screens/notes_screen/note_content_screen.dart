@@ -43,7 +43,7 @@ class _NoteContentScreenState extends State<NoteContentScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               QuillToolbar.simple(

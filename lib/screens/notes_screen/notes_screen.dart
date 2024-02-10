@@ -53,7 +53,9 @@ class NotesScreen extends StatelessWidget {
                       onLongPress: () {
                         showDialog(
                             context: context,
-                            builder: (builder) => ConfirmationDialog());
+                            builder: (builder) => ConfirmationDialog(
+                                  index: index,
+                                ));
                       },
                       title: Provider.of<NoteData>(context)
                           .noteBox
@@ -93,7 +95,6 @@ class NotesScreen extends StatelessWidget {
                               onPressed: () {
                                 Provider.of<NoteData>(context, listen: false)
                                     .addNote(Note(
-                                        id: 'asd',
                                         title: noteTitle!,
                                         date: DateTime.now()));
 

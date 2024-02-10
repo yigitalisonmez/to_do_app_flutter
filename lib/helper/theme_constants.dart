@@ -14,6 +14,8 @@ const kCheckboxCheckColorLight = Colors.black;
 
 const kDrawerColorLight = Color(0xffc2cef9);
 
+const temp = Color(0xff6a8cec);
+
 ThemeData lightMode = ThemeData(
   textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black),
   brightness: Brightness.light,
@@ -60,6 +62,9 @@ ThemeData lightMode = ThemeData(
 
   ///DRAWER THEME
   drawerTheme: const DrawerThemeData(backgroundColor: kDrawerColorLight),
+
+  /// DIALOG THEME
+  //dialogTheme:DialogTheme(backgroundColor: ),
 );
 
 ThemeData darkMode = ThemeData(

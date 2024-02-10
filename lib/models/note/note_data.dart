@@ -10,6 +10,7 @@ class NoteData extends ChangeNotifier {
     _initNoteBox();
   }
   int boxLength = -1;
+  int selectedIndex = -1;
 
   ///BASIC CRUD OPERATIONS
 
@@ -32,6 +33,7 @@ class NoteData extends ChangeNotifier {
 
   // Delete note
   void deleteNoteAt(int index) {
+    print(noteBox.length);
     noteBox.deleteAt(index);
     notifyListeners();
   }
