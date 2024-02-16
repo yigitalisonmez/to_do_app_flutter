@@ -1,15 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey_flutter/helper/theme_provider.dart';
+import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
 
 class NoteContentScreen extends StatefulWidget {
   static String noteContentScreenPath = '/note-content-screen';
   final int noteIndex;
+  String noteContent;
+  bool isNew;
 
-  const NoteContentScreen({super.key, required this.noteIndex});
+  NoteContentScreen(
+      {super.key,
+      required this.noteIndex,
+      required this.noteContent,
+      required this.isNew});
   @override
   State<NoteContentScreen> createState() => _NoteContentScreenState();
 }
@@ -17,15 +24,28 @@ class NoteContentScreen extends StatefulWidget {
 class _NoteContentScreenState extends State<NoteContentScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    widget.isNew ? null : loadNote();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    //Provider.of<NoteData>(context).saveOnExit();
+    saveNote();
+  }
+
+  void loadNote() {
+    final doc = Document()..insert(0, widget.noteContent);
+    setState(() {
+      _controller = QuillController(
+          document: doc, selection: const TextSelection.collapsed(offset: 0));
+    });
+  }
+
+  void saveNote() {
+    String newNoteContent = _controller.document.toPlainText();
+    Provider.of<NoteData>(context, listen: false)
+        .saveNote(index: widget.noteIndex, noteContent: newNoteContent);
   }
 
   QuillController _controller = QuillController.basic();
@@ -34,7 +54,13 @@ class _NoteContentScreenState extends State<NoteContentScreen> {
     Note? note = Provider.of<NoteData>(context).getNote(widget.noteIndex);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  saveNote();
+                },
+                icon: const Icon(Icons.save))
+          ],
         ),
         backgroundColor: Provider.of<ThemeProvider>(context).isDark
             ? Colors.black
@@ -86,7 +112,6 @@ class _NoteContentScreenState extends State<NoteContentScreen> {
                   ),
                 ),
               ),
-              Text('${note?.content}'),
             ],
           ),
         ));

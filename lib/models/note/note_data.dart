@@ -39,8 +39,12 @@ class NoteData extends ChangeNotifier {
   }
 
   // Update note
-  void updateNote(int index, Note updatedNote) {
-    noteBox.putAt(index, updatedNote);
+  void saveNote({required index, required noteContent}) {
+    Note? note = getNote(index);
+    if (note != null) {
+      note.content = noteContent;
+      noteBox.putAt(index, note);
+    }
     notifyListeners();
   }
 

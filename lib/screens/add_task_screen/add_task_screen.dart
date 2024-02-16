@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey_flutter/helper/theme_provider.dart';
+import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/task/task.dart';
 import 'package:todoey_flutter/models/task/task_data.dart';
 

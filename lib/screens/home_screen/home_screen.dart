@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/helper/theme_provider.dart';
+import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/screens/add_task_screen/add_task_screen.dart';
 import 'package:todoey_flutter/screens/notes_screen/notes_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import '../../models/task/task_data.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:todoey_flutter/helpers/theme_constants.dart';
 
 class HomeScreen extends StatelessWidget {
   static String homeScreenPath = '/';
@@ -48,7 +49,8 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 50.0,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'DotGothic16'),
                 ),
                 Text(
                   '${Provider.of<TaskData>(context).taskNumber} Tasks',

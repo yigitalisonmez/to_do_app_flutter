@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/helpers/theme_constants.dart';
 
 class TaskTile extends StatelessWidget {
   final bool isChecked;
@@ -18,27 +19,32 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onLongPress: editTaskCallback,
-      title: Text(
-        taskTitle,
-        style: TextStyle(
-            decoration:
-                isChecked ? TextDecoration.lineThrough : TextDecoration.none),
-      ),
-      leading: Checkbox(
-        value: isChecked,
-        onChanged: checkboxCallback,
-        //checkboxCallback:
-      ),
-      trailing: IconButton(
-        onPressed: deleteTaskCallback,
-        icon: Icon(
-          Icons.delete,
-          color: Color(0xffd94d3c),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 2),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(12), boxShadow: []),
+      child: ListTile(
+        onLongPress: editTaskCallback,
+        title: Text(
+          taskTitle,
+          style: TextStyle(
+              decoration:
+                  isChecked ? TextDecoration.lineThrough : TextDecoration.none),
         ),
+        leading: Checkbox(
+          value: isChecked,
+          onChanged: checkboxCallback,
+          //checkboxCallback:
+        ),
+        trailing: IconButton(
+          onPressed: deleteTaskCallback,
+          icon: Icon(
+            Icons.delete,
+            color: Color(0xffd94d3c),
+          ),
+        ),
+        //style: ListTileStyle(),
       ),
-      //style: ListTileStyle(),
     );
   }
 }

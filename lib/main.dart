@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/helper/theme_provider.dart';
+import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
 import 'package:todoey_flutter/models/task/task_data.dart';
@@ -19,7 +19,6 @@ void main() async {
 
   await Hive.initFlutter();
 
-  /// BURADAKİ KOD SPLASH SCREEN'E BİR FONKSİYONDA GİDECEK
   /// It's recommended to register all TypeAdapters before opening any boxes.
   Hive.registerAdapter(NoteAdapter());
 

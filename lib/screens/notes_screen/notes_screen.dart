@@ -31,7 +31,7 @@ class NotesScreen extends StatelessWidget {
           actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
         ),
         drawer: MyDrawer(homeScreenPath: HomeScreen.homeScreenPath),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).primaryColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Provider.of<NoteData>(context).noteBox.length == 0
@@ -42,13 +42,22 @@ class NotesScreen extends StatelessWidget {
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 10,
                   itemBuilder: (context, index) {
+                    ///NOTE CARD
                     return NoteCard(
                       onTap: () {
+                        String noteContent =
+                            Provider.of<NoteData>(context, listen: false)
+                                .getNote(index)!
+                                .content;
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    NoteContentScreen(noteIndex: index)));
+                                builder: (context) => NoteContentScreen(
+                                      noteIndex: index,
+                                      noteContent: noteContent,
+                                      isNew: false,
+                                    )));
                       },
                       onLongPress: () {
                         showDialog(
@@ -96,9 +105,19 @@ class NotesScreen extends StatelessWidget {
                                 Provider.of<NoteData>(context, listen: false)
                                     .addNote(Note(
                                         title: noteTitle!,
+                                        content: '',
                                         date: DateTime.now()));
+                                int size = Provider.of<NoteData>(context,
+                                        listen: false)
+                                    .boxLength;
 
-                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NoteContentScreen(
+                                            noteIndex: size,
+                                            noteContent: '',
+                                            isNew: true)));
                               },
                               child: const Text('Submit'),
                             ),
@@ -112,10 +131,3 @@ class NotesScreen extends StatelessWidget {
     );
   }
 }
-
-/*
-Navigator.push(
-context,
-MaterialPageRoute(
-builder: (context) =>
-const NoteContentScreen(noteIndex: -1)));*/

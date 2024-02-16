@@ -51,4 +51,8 @@ flutter:
 
   assets:
     - assets/avatar.jpeg
+  fonts:
+    - family: DotGothic16
+      fonts:
+        - asset: fonts/DotGothic16-Regular.ttf
 
