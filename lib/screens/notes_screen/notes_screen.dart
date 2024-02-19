@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/helpers/theme_constants.dart';
+import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
 import 'package:todoey_flutter/screens/home_screen/home_screen.dart';
 import 'package:todoey_flutter/screens/notes_screen/note_content_screen.dart';
@@ -19,16 +21,18 @@ class NotesScreen extends StatelessWidget {
     final noteData = Provider.of<NoteData>(context);
 
     if (noteData.boxLength == -1) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Center(
+          title: const Center(
             child: Text('NOTES'),
           ),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+          ],
         ),
         drawer: MyDrawer(homeScreenPath: HomeScreen.homeScreenPath),
         backgroundColor: Theme.of(context).primaryColor,
@@ -44,6 +48,12 @@ class NotesScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     ///NOTE CARD
                     return NoteCard(
+                      color: cardColors[index % 3],
+                      textColor: Provider.of<ThemeProvider>(context).isDark
+                          ? Colors.black
+                          : Colors.white,
+                      height:
+                          ((index % 4) == 3 || (index % 4) == 0) ? 120 : 200,
                       onTap: () {
                         String noteContent =
                             Provider.of<NoteData>(context, listen: false)
@@ -70,28 +80,30 @@ class NotesScreen extends StatelessWidget {
                           .noteBox
                           .getAt(index)!
                           .title,
-                      height:
-                          ((index % 4) == 3 || (index % 4) == 0) ? 120 : 200,
-                      color: Colors.blue,
                     );
                   },
                 ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          backgroundColor: const Color(0xff4A4A4A),
+          child: const Icon(Icons.add),
           onPressed: () {
             showDialog(
                 context: context,
                 builder: (builder) => Dialog(
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 5),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Enter note title'),
+                            const Text(
+                              'Enter the title',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'DotGothic16',
+                                  fontWeight: FontWeight.w600),
+                            ),
                             const SizedBox(height: 15),
                             TextField(
                               autofocus: true,
@@ -100,6 +112,7 @@ class NotesScreen extends StatelessWidget {
                                 noteTitle = value;
                               },
                             ),
+                            const SizedBox(height: 15),
                             TextButton(
                               onPressed: () {
                                 Provider.of<NoteData>(context, listen: false)
@@ -110,7 +123,6 @@ class NotesScreen extends StatelessWidget {
                                 int size = Provider.of<NoteData>(context,
                                         listen: false)
                                     .boxLength;
-
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -119,7 +131,15 @@ class NotesScreen extends StatelessWidget {
                                             noteContent: '',
                                             isNew: true)));
                               },
-                              child: const Text('Submit'),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Submit',
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
