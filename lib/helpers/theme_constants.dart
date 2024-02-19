@@ -23,9 +23,14 @@ const List<Color> homePagePalette = [
   Color(0xfffd8466),
   Color(0xff6a8cec)
 ];
+const List<Color> cardColors = [
+  Color(0xfff5f378),
+  Color(0xffdcc1ff),
+  Color(0xffec704b)
+];
 
 ThemeData darkMode = ThemeData(
-  textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
+  textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
   brightness: Brightness.dark,
   primaryColor: const Color(0xff1a1a1a),
   colorScheme: ColorScheme.dark(
@@ -35,8 +40,14 @@ ThemeData darkMode = ThemeData(
       secondary: Colors.grey.shade700,
       tertiary: TERTIARY_COLOR_DARK),
   scaffoldBackgroundColor: kScaffoldBackgroundColorDark,
-  textTheme:
-      const TextTheme(displayMedium: TextStyle(fontFamily: 'DotGothic16')),
+
+  /// TEXT THEME
+  textTheme: const TextTheme(
+    displayMedium: TextStyle(fontFamily: 'DotGothic16'),
+    bodySmall: TextStyle(fontFamily: 'Roboto'),
+    bodyMedium: TextStyle(fontFamily: 'Roboto'),
+    bodyLarge: TextStyle(fontFamily: 'Roboto'),
+  ),
 
   ///FLOATING ACTION BUTTON
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -51,11 +62,11 @@ ThemeData darkMode = ThemeData(
 
   ///INPUT DECORATION
   inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Color(0xff1a1a1a),
     border: const OutlineInputBorder(),
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(
-        color: Colors.black,
-      ),
+      borderSide: const BorderSide(),
       borderRadius: BorderRadius.circular(15.0),
     ),
     enabledBorder: OutlineInputBorder(
@@ -69,11 +80,21 @@ ThemeData darkMode = ThemeData(
   ///APP BAR THEME
   appBarTheme: const AppBarTheme(backgroundColor: kScaffoldBackgroundColorDark),
 
-  ///TEXT THEME
+  /// DIALOG THEME
+  dialogTheme: const DialogTheme(
+    backgroundColor: Colors.black,
+  ),
+
+  /// TEXT BUTTON THEME
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(cardColors[1]),
+    ),
+  ),
 );
 
 ThemeData lightMode = ThemeData(
-  textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black),
+  textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.black),
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
     background: kScaffoldBackgroundColorLight,
@@ -103,16 +124,18 @@ ThemeData lightMode = ThemeData(
 
   ///INPUT DECORATION
   inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Color(0xfff2f2f7),
     border: const OutlineInputBorder(),
     focusedBorder: OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Colors.black,
+        color: Colors.white,
       ),
       borderRadius: BorderRadius.circular(15.0),
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Colors.black,
+        color: Colors.white,
       ),
       borderRadius: BorderRadius.circular(15.0),
     ),
@@ -121,9 +144,17 @@ ThemeData lightMode = ThemeData(
   ///DRAWER THEME
   drawerTheme: const DrawerThemeData(backgroundColor: kDrawerColorLight),
 
-  ///LIST TILE THEME
-  //listTileTheme: ListTileThemeData(tileColor: homePagePalette[2]),
-
   /// DIALOG THEME
-  //dialogTheme:DialogTheme(backgroundColor: ),
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.white,
+  ),
+
+  /// TEXT BUTTON THEME
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      textStyle: MaterialStateProperty.all(
+          const TextStyle(color: Colors.black, fontWeight: FontWeight.w900)),
+      backgroundColor: MaterialStateProperty.all(kScaffoldBackgroundColorLight),
+    ),
+  ),
 );

@@ -55,4 +55,10 @@ flutter:
     - family: DotGothic16
       fonts:
         - asset: fonts/DotGothic16-Regular.ttf
+    - family: Micro5
+      fonts:
+        - asset: fonts/Micro5-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Regular.ttf
 
