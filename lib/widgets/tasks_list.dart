@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'task_tile.dart';
 import 'package:todoey_flutter/models/task/task_data.dart';
 
+final TextEditingController _textEditingController = TextEditingController();
+
 class TaskList extends StatelessWidget {
   const TaskList({super.key});
   @override
@@ -44,7 +46,8 @@ class TaskList extends StatelessWidget {
                     .deleteTask(uuid: currentTask['uuid']);
               },
               editTaskCallback: () {
-                String? newTaskDescription;
+                String newTaskDescription = currentTask['taskDescription'];
+                _textEditingController.text = newTaskDescription;
                 showDialog(
                     context: context,
                     builder: (builder) => Dialog(
@@ -59,6 +62,7 @@ class TaskList extends StatelessWidget {
                                 const Text('Enter new task description'),
                                 const SizedBox(height: 15),
                                 TextField(
+                                  controller: _textEditingController,
                                   cursorColor:
                                       Theme.of(context).scaffoldBackgroundColor,
                                   autofocus: true,

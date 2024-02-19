@@ -27,6 +27,7 @@ class TaskData extends ChangeNotifier {
     return null;
   }
 
+  void getTask({required String uuid}) async {}
   void addTask(Task task) async {
     collection.doc(task.uuid).set({
       'uuid': task.uuid,

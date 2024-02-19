@@ -12,12 +12,14 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Provider.of<ThemeProvider>(context).isDark
-          ? Color(0xff141415)
-          : Color(0xff676c70),
+          ? const Color(0xff141415)
+          : const Color(0xff676c70),
       child: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+            color: Provider.of<ThemeProvider>(context).isDark
+                ? Colors.black
+                : Colors.white,
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0))),
         child: Container(
@@ -25,16 +27,12 @@ class AddTaskScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 'Add Task',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    fontSize: 30.0),
+                style: TextStyle(fontSize: 30.0),
               ),
               TextField(
-                style: TextStyle(color: Colors.black),
-                cursorColor: Colors.black,
                 autofocus: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -42,7 +40,7 @@ class AddTaskScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20.0),
-              ElevatedButton(
+              TextButton(
                   onPressed: () {
                     Provider.of<TaskData>(context, listen: false).addTask(Task(
                         taskDescription: taskTitle!,
@@ -51,10 +49,6 @@ class AddTaskScreen extends StatelessWidget {
 
                     Navigator.pop(context);
                   },
-                  style: TextButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
-                      elevation: 10.0),
                   child: const Text(
                     'Add',
                     style: TextStyle(fontSize: 20.0, color: Colors.white),

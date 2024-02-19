@@ -85,14 +85,13 @@ class NotesScreen extends StatelessWidget {
                 ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xff4A4A4A),
           child: const Icon(Icons.add),
           onPressed: () {
             showDialog(
                 context: context,
                 builder: (builder) => Dialog(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 5),
+                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -137,6 +136,7 @@ class NotesScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Submit',
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                 ],
                               ),

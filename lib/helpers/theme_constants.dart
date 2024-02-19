@@ -50,8 +50,8 @@ ThemeData darkMode = ThemeData(
   ),
 
   ///FLOATING ACTION BUTTON
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: kScaffoldBackgroundColorDark),
+  floatingActionButtonTheme:
+      const FloatingActionButtonThemeData(backgroundColor: Color(0xff1c1c1d)),
 
   ///CHECKBOX
   checkboxTheme: CheckboxThemeData(
@@ -63,7 +63,7 @@ ThemeData darkMode = ThemeData(
   ///INPUT DECORATION
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: Color(0xff1a1a1a),
+    fillColor: const Color(0xff1a1a1a),
     border: const OutlineInputBorder(),
     focusedBorder: OutlineInputBorder(
       borderSide: const BorderSide(),
@@ -125,7 +125,7 @@ ThemeData lightMode = ThemeData(
   ///INPUT DECORATION
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: Color(0xfff2f2f7),
+    fillColor: const Color(0xfff2f2f7),
     border: const OutlineInputBorder(),
     focusedBorder: OutlineInputBorder(
       borderSide: const BorderSide(
@@ -145,7 +145,7 @@ ThemeData lightMode = ThemeData(
   drawerTheme: const DrawerThemeData(backgroundColor: kDrawerColorLight),
 
   /// DIALOG THEME
-  dialogTheme: DialogTheme(
+  dialogTheme: const DialogTheme(
     backgroundColor: Colors.white,
   ),
 
