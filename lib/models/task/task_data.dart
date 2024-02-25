@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/models/task/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:todoey_flutter/screens/todo_screen/todo_screen.dart';
 
 class TaskData extends ChangeNotifier {
   final Stream<QuerySnapshot<Map<String, dynamic>>>? stream =

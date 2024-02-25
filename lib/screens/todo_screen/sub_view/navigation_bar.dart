@@ -8,7 +8,6 @@ _bottomNavigationBar(BuildContext context) {
     backgroundColor: Theme.of(context).colorScheme.primary,
     onTap: (idx) => provider.changeSelectedIdx(idx),
     items: [
-      Icon(CupertinoIcons.add),
       Icon(CupertinoIcons.home),
       Icon(Icons.sticky_note_2),
     ],
