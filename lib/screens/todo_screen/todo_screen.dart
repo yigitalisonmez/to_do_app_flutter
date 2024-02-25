@@ -1,23 +1,30 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/screens/add_task_screen/add_task_screen.dart';
+
 import 'package:todoey_flutter/screens/notes_screen/notes_screen.dart';
+import 'package:todoey_flutter/screens/todo_screen/view_model/todo_screen_view_model.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '../../models/task/task_data.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
+part 'package:todoey_flutter/screens/todo_screen/sub_view/custom_drawer.dart';
+part 'package:todoey_flutter/screens/todo_screen/sub_view/navigation_bar.dart';
 
-class HomeScreen extends StatelessWidget {
-  static String homeScreenPath = '/';
-  const HomeScreen({super.key});
+@RoutePage()
+class TodoScreen extends StatelessWidget {
+  const TodoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: MyDrawer(homeScreenPath: homeScreenPath),
+      //drawer: MyDrawer(homeScreenPath: homeScreenPath),
+      bottomNavigationBar: _bottomNavigationBar(context),
       floatingActionButton: FloatingActionButton(
           child: const Icon(CupertinoIcons.add, color: Colors.white),
           onPressed: () {
@@ -72,65 +79,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({
-    super.key,
-    required this.homeScreenPath,
-  });
-
-  final String homeScreenPath;
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Container(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-                child: CircleAvatar(
-              backgroundImage: AssetImage('assets/avatar.jpeg'),
-            )),
-            ListTile(
-              leading: const Icon(CupertinoIcons.home),
-              title: const Text('Home'),
-              onTap: () {
-                /// Yanlış bir kullanım
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pushNamed(context, homeScreenPath);
-              },
-            ),
-            const ListTile(
-              leading: Icon(Icons.edit_calendar),
-              title: Text('Routines'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.sticky_note_2),
-              title: const Text('Notes'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.popAndPushNamed(context, NotesScreen.notesScreenPath);
-              },
-            ),
-            const ListTile(
-              leading: Icon(CupertinoIcons.book),
-              title: Text('Journal'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.brightness_6_rounded),
-              title: const Text('Change Theme'),
-              onTap: () {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .toggleTheme();
-              },
-            ),
-          ],
-        ),
       ),
     );
   }

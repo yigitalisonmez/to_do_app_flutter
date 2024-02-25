@@ -1,8 +1,8 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
-import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
-import 'package:todoey_flutter/screens/home_screen/home_screen.dart';
+import 'package:todoey_flutter/screens/todo_screen/todo_screen.dart';
 import 'package:todoey_flutter/screens/notes_screen/note_content_screen.dart';
 import 'package:todoey_flutter/widgets/confirmation_dialog.dart';
 import 'package:todoey_flutter/widgets/custom_note_card.dart';
@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/note/note.dart';
 
+@RoutePage()
 class NotesScreen extends StatelessWidget {
   NotesScreen({super.key});
   static String notesScreenPath = '/notes-screen';
@@ -34,7 +35,7 @@ class NotesScreen extends StatelessWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
-        drawer: MyDrawer(homeScreenPath: HomeScreen.homeScreenPath),
+        //drawer: MyDrawer(homeScreenPath: HomeScreen.homeScreenPath),
         backgroundColor: Theme.of(context).primaryColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -48,12 +49,13 @@ class NotesScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     ///NOTE CARD
                     return NoteCard(
+                      content: Provider.of<NoteData>(context, listen: false)
+                          .getNote(index)!
+                          .content,
                       color: cardColors[index % 3],
-                      textColor: Provider.of<ThemeProvider>(context).isDark
-                          ? Colors.black
-                          : Colors.white,
+                      textColor: Colors.black,
                       height:
-                          ((index % 4) == 3 || (index % 4) == 0) ? 120 : 200,
+                          ((index % 4) == 3 || (index % 4) == 0) ? 180 : 240,
                       onTap: () {
                         String noteContent =
                             Provider.of<NoteData>(context, listen: false)
