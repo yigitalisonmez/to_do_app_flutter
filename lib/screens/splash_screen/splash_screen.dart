@@ -1,8 +1,8 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todoey_flutter/models/task/task_data.dart';
-import 'package:todoey_flutter/screens/home_screen/home_screen.dart';
 
+@RoutePage()
 class SplashScreen extends StatefulWidget {
   static String splashScreenPath = '/splash-screen';
   const SplashScreen({super.key});

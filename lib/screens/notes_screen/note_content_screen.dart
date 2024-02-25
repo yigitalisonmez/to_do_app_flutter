@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -6,6 +7,7 @@ import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
 
+@RoutePage()
 class NoteContentScreen extends StatefulWidget {
   static String noteContentScreenPath = '/note-content-screen';
   final int noteIndex;

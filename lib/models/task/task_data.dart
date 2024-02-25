@@ -1,8 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/models/task/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:todoey_flutter/screens/home_screen/home_screen.dart';
+import 'package:todoey_flutter/screens/todo_screen/todo_screen.dart';
 
 class TaskData extends ChangeNotifier {
   final Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
@@ -17,12 +18,13 @@ class TaskData extends ChangeNotifier {
 
   bool isLoading = true;
 
-  loadTasks(BuildContext ctx) async {
+  loadTasks(BuildContext context) async {
     isLoading = true;
     QuerySnapshot<Object?> documents = await collection.get();
     isLoading = false;
     taskNumber = documents.size;
-    Navigator.popAndPushNamed(ctx, HomeScreen.homeScreenPath);
+    //context.router.popAndPush();
+
     notifyListeners();
     return null;
   }

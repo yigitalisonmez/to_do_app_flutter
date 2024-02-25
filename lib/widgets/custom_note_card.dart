@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 const BoxDecoration cardStyle1 = BoxDecoration(color: Colors.green);
 const BoxDecoration cardStyle2 = BoxDecoration(color: Colors.grey);
@@ -10,9 +11,11 @@ class NoteCard extends StatelessWidget {
   final double height;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
+  String content = '';
 
-  const NoteCard({
+  NoteCard({
     super.key,
+    required this.content,
     required this.title,
     required this.color,
     required this.textColor,
@@ -36,15 +39,43 @@ class NoteCard extends StatelessWidget {
             child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                title,
-                style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 16),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
+                      Icons.sticky_note_2_sharp,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      title,
+                      style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16),
+                    ),
+                    const Icon(
+                      Icons.more_vert_sharp,
+                      color: Colors.black,
+                    )
+                  ],
+                ),
               ),
             ),
+            Flexible(
+              child: RichText(
+                text: TextSpan(
+                    text: content,
+                    style: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 12,
+                    )),
+                maxLines: 8,
+                overflow: TextOverflow.visible,
+              ),
+            )
           ],
         )),
       ),
