@@ -1,12 +1,9 @@
-part of '../todo_screen.dart';
+part of 'package:todoey_flutter/views/todo_view/todo_view.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
     super.key,
-    required this.homeScreenPath,
   });
-
-  final String homeScreenPath;
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +17,36 @@ class MyDrawer extends StatelessWidget {
             )),
             ListTile(
               leading: const Icon(CupertinoIcons.home),
-              title: const Text('Home'),
+              title: const Text('Todo\'s'),
               onTap: () {
-                /// Yanlış bir kullanım
+                /// pops drawer
                 Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pushNamed(context, homeScreenPath);
+
+                /// pops current screen
+                Navigator.popAndPushNamed(context, TodoView.path);
+
+/*                AutoRouter.of(context).pop();
+                AutoRouter.of(context).pop();
+                AutoRouter.of(context).popAndPush(const TodoRoute());*/
               },
             ),
-            const ListTile(
-              leading: Icon(Icons.edit_calendar),
-              title: Text('Routines'),
+            ListTile(
+              leading: const Icon(Icons.edit_calendar),
+              title: const Text('Routines'),
+              onTap: () {
+                Navigator.popAndPushNamed(context, RoutinesView.path);
+/*                AutoRouter.of(context).pop();
+                AutoRouter.of(context).push(const RoutinesRoute());*/
+              },
             ),
             ListTile(
               leading: const Icon(Icons.sticky_note_2),
               title: const Text('Notes'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.popAndPushNamed(context, NotesScreen.notesScreenPath);
+                Navigator.popAndPushNamed(context, NotesView.path);
+/*                AutoRouter.of(context).pop();
+                AutoRouter.of(context).popAndPush(NotesRoute());*/
               },
             ),
             const ListTile(

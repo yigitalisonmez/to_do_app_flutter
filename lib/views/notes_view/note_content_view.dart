@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -7,59 +6,60 @@ import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
 
-@RoutePage()
-class NoteContentScreen extends StatefulWidget {
-  static String noteContentScreenPath = '/note-content-screen';
-  final int noteIndex;
-  String noteContent;
-  bool isNew;
+class NoteContentView extends StatefulWidget {
+  static String path = '/note-content-view';
+  final Note currentNote;
+  final int
+      noteIndex; // ==-1 means a new note !=-1 means the real index of note
 
-  NoteContentScreen(
-      {super.key,
-      required this.noteIndex,
-      required this.noteContent,
-      required this.isNew});
+  NoteContentView(
+      {super.key, required Note this.currentNote, required int this.noteIndex});
   @override
-  State<NoteContentScreen> createState() => _NoteContentScreenState();
+  State<NoteContentView> createState() => _NoteContentViewState();
 }
 
-class _NoteContentScreenState extends State<NoteContentScreen> {
+class _NoteContentViewState extends State<NoteContentView> {
   @override
   void initState() {
     super.initState();
-    widget.isNew ? null : loadNote();
+    if (widget.noteIndex != -1) {
+      loadNoteToController();
+    }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    saveNote();
-  }
-
-  void loadNote() {
-    final doc = Document()..insert(0, widget.noteContent);
+  void loadNoteToController() {
+    final doc = Document()..insert(0, widget.currentNote.content);
     setState(() {
       _controller = QuillController(
           document: doc, selection: const TextSelection.collapsed(offset: 0));
     });
   }
 
-  void saveNote() {
+  void updateNoteContent() {
     String newNoteContent = _controller.document.toPlainText();
-    Provider.of<NoteData>(context, listen: false)
-        .saveNote(index: widget.noteIndex, noteContent: newNoteContent);
+    widget.currentNote.content = newNoteContent;
   }
 
   QuillController _controller = QuillController.basic();
   @override
   Widget build(BuildContext context) {
-    Note? note = Provider.of<NoteData>(context).getNote(widget.noteIndex);
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                updateNoteContent();
+                Provider.of<NoteData>(context, listen: false).saveNote(
+                    newNote: widget.currentNote, index: widget.noteIndex);
+                Navigator.pop(context);
+              }),
           actions: [
             IconButton(
                 onPressed: () {
-                  saveNote();
+                  updateNoteContent();
+                  Provider.of<NoteData>(context, listen: false).saveNote(
+                      newNote: widget.currentNote, index: widget.noteIndex);
+                  Navigator.pop(context);
                 },
                 icon: const Icon(Icons.save))
           ],

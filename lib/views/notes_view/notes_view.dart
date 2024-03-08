@@ -1,20 +1,18 @@
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
-import 'package:todoey_flutter/screens/todo_screen/todo_screen.dart';
-import 'package:todoey_flutter/screens/notes_screen/note_content_screen.dart';
-import 'package:todoey_flutter/widgets/confirmation_dialog.dart';
-import 'package:todoey_flutter/widgets/custom_note_card.dart';
+
+import 'package:todoey_flutter/helpers/widgets/confirmation_dialog.dart';
+import 'package:todoey_flutter/helpers/widgets/custom_note_card.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-
+import 'package:todoey_flutter/views/notes_view/note_content_view.dart';
+import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 import '../../models/note/note.dart';
 
-@RoutePage()
-class NotesScreen extends StatelessWidget {
-  NotesScreen({super.key});
-  static String notesScreenPath = '/notes-screen';
+class NotesView extends StatelessWidget {
+  NotesView({super.key});
+  static String path = '/notes-view';
   String? noteTitle;
 
   @override
@@ -28,6 +26,12 @@ class NotesScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: const Center(
             child: Text('NOTES'),
           ),
@@ -35,7 +39,7 @@ class NotesScreen extends StatelessWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
-        //drawer: MyDrawer(homeScreenPath: HomeScreen.homeScreenPath),
+        drawer: MyDrawer(),
         backgroundColor: Theme.of(context).primaryColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -49,27 +53,30 @@ class NotesScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     ///NOTE CARD
                     return NoteCard(
-                      content: Provider.of<NoteData>(context, listen: false)
-                          .getNote(index)!
-                          .content,
+                      content: Provider.of<NoteData>(
+                        context,
+                      ).getNote(index)!.content,
                       color: cardColors[index % 3],
                       textColor: Colors.black,
                       height:
                           ((index % 4) == 3 || (index % 4) == 0) ? 180 : 240,
                       onTap: () {
-                        String noteContent =
+                        Note note =
                             Provider.of<NoteData>(context, listen: false)
-                                .getNote(index)!
-                                .content;
+                                .getNote(index)!;
 
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NoteContentScreen(
-                                      noteIndex: index,
-                                      noteContent: noteContent,
-                                      isNew: false,
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => NoteContentView(
+                                  currentNote: note, noteIndex: index)),
+                        );
+/*                        AutoRouter.of(context).push(
+                          NoteContentRoute(
+                            noteIndex: index,
+                            currentNote: note,
+                          ),
+                        );*/
                       },
                       onLongPress: () {
                         showDialog(
@@ -114,23 +121,33 @@ class NotesScreen extends StatelessWidget {
                               },
                             ),
                             const SizedBox(height: 15),
+
+                            /// ADD NEW NOTE
                             TextButton(
                               onPressed: () {
+                                Note newNote = Note(
+                                    title: noteTitle!,
+                                    content: '',
+                                    date: DateTime.now());
+
                                 Provider.of<NoteData>(context, listen: false)
-                                    .addNote(Note(
-                                        title: noteTitle!,
-                                        content: '',
-                                        date: DateTime.now()));
-                                int size = Provider.of<NoteData>(context,
+                                    .addNote(newNote);
+                                int boxSize = Provider.of<NoteData>(context,
                                         listen: false)
-                                    .boxLength;
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => NoteContentScreen(
-                                            noteIndex: size,
-                                            noteContent: '',
-                                            isNew: true)));
+                                    .noteBox
+                                    .length;
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => NoteContentView(
+                                          currentNote: newNote,
+                                          noteIndex: boxSize - 1)),
+                                );
+/*                                AutoRouter.of(context).popAndPush(
+                                    NoteContentRoute(
+                                        noteIndex: boxSize - 1,
+                                        currentNote: newNote));*/
                               },
                               child: const Row(
                                 mainAxisAlignment:

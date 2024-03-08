@@ -17,12 +17,13 @@ class NoteData extends ChangeNotifier {
   // Add note
   void addNote(Note newNote) {
     noteBox.add(newNote);
+    boxLength++;
     notifyListeners();
   }
 
   // Get Note
-  Note? getNote(dynamic key) {
-    return noteBox.get(key);
+  Note? getNote(int index) {
+    return noteBox.getAt(index);
   }
 
   // Get notes
@@ -33,18 +34,16 @@ class NoteData extends ChangeNotifier {
 
   // Delete note
   void deleteNoteAt(int index) {
-    print(noteBox.length);
     noteBox.deleteAt(index);
+    boxLength--;
     notifyListeners();
   }
 
   // Update note
-  void saveNote({required index, required noteContent}) {
-    Note? note = getNote(index);
-    if (note != null) {
-      note.content = noteContent;
-      noteBox.putAt(index, note);
-    }
+  void saveNote({required Note newNote, required int index}) {
+    Note note = getNote(index)!;
+    note.content = newNote.content;
+    noteBox.putAt(index, note);
     notifyListeners();
   }
 

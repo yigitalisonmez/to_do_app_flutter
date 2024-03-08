@@ -1,35 +1,39 @@
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
-import 'package:todoey_flutter/screens/add_task_screen/add_task_screen.dart';
-
-import 'package:todoey_flutter/screens/notes_screen/notes_screen.dart';
-import 'package:todoey_flutter/screens/todo_screen/view_model/todo_screen_view_model.dart';
-import 'package:todoey_flutter/widgets/tasks_list.dart';
+import 'package:todoey_flutter/helpers/widgets/tasks_list.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:todoey_flutter/view_models/todo_view_model.dart';
+import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
+import 'package:todoey_flutter/views/notes_view/notes_view.dart';
+import 'package:todoey_flutter/views/routines_view/routines_view.dart';
 import '../../models/task/task_data.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
-part 'package:todoey_flutter/screens/todo_screen/sub_view/custom_drawer.dart';
-part 'package:todoey_flutter/screens/todo_screen/sub_view/navigation_bar.dart';
+part 'package:todoey_flutter/views/todo_view/sub_view/custom_drawer.dart';
+part 'package:todoey_flutter/views/todo_view/sub_view/navigation_bar.dart';
 
-@RoutePage()
-class TodoScreen extends StatelessWidget {
-  const TodoScreen({super.key});
+class TodoView extends StatefulWidget {
+  static String path = '/todo-view';
+  const TodoView({super.key});
 
+  @override
+  State<TodoView> createState() => _TodoViewState();
+}
+
+class _TodoViewState extends State<TodoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      //drawer: MyDrawer(homeScreenPath: homeScreenPath),
-      bottomNavigationBar: _bottomNavigationBar(context),
+      drawer: MyDrawer(),
+      //bottomNavigationBar: animatedNavigationBar(context),
       floatingActionButton: FloatingActionButton(
           child: const Icon(CupertinoIcons.add, color: Colors.white),
           onPressed: () {
             showModalBottomSheet(
-                builder: (context) => AddTaskScreen(), context: context);
+                builder: (context) => AddTodoView(), context: context);
           }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +64,7 @@ class TodoScreen extends StatelessWidget {
                       fontFamily: 'DotGothic16'),
                 ),
                 Text(
-                  '${Provider.of<TaskData>(context).taskNumber} Tasks',
+                  '${Provider.of<TaskData>(context, listen: true).taskNumber} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],

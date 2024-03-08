@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/models/task/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 
 class TaskData extends ChangeNotifier {
   final Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
@@ -14,18 +14,17 @@ class TaskData extends ChangeNotifier {
   List<Task> taskList = [];
 
   int taskNumber = 0;
+  static bool isLoading = true;
 
-  bool isLoading = true;
-
-  loadTasks(BuildContext context) async {
+  Future<void> loadTasks(BuildContext context) async {
     isLoading = true;
     QuerySnapshot<Object?> documents = await collection.get();
     isLoading = false;
     taskNumber = documents.size;
-    //context.router.popAndPush();
-
+    Navigator.popAndPushNamed(context, TodoView.path);
+    //AutoRouter.of(context).popAndPush(const TodoRoute());
     notifyListeners();
-    return null;
+    return;
   }
 
   void getTask({required String uuid}) async {}

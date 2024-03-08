@@ -1,13 +1,11 @@
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/task/task.dart';
 import 'package:todoey_flutter/models/task/task_data.dart';
 
-@RoutePage()
-class AddTaskScreen extends StatelessWidget {
-  static String addTaskScreenPath = '/add-task-screen';
+class AddTodoView extends StatelessWidget {
+  static String path = '/add-task-view';
   String? taskTitle;
 
   @override
