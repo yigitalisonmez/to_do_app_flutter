@@ -27,7 +27,7 @@ class _TodoViewState extends State<TodoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       //bottomNavigationBar: animatedNavigationBar(context),
       floatingActionButton: FloatingActionButton(
           child: const Icon(CupertinoIcons.add, color: Colors.white),

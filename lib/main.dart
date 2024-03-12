@@ -9,6 +9,7 @@ import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
 import 'package:todoey_flutter/views/splash_view/splash_view.dart';
+import 'package:todoey_flutter/views/test_view.dart';
 import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 
 import 'firebase_options.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           AddTodoView.path: (context) => AddTodoView(),
           NotesView.path: (context) => NotesView(),
           RoutinesView.path: (context) => const RoutinesView(),
+          TestView.path: (context) => const TestView(),
         },
         debugShowCheckedModeBanner: false,
         theme: Provider.of<ThemeProvider>(context).currTheme,

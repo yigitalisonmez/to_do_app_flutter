@@ -5,6 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 
 class TaskData extends ChangeNotifier {
+  TaskData() {
+    loadTasks();
+  }
+
   final Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
       FirebaseFirestore.instance.collection('tasks').snapshots();
 
@@ -16,17 +20,18 @@ class TaskData extends ChangeNotifier {
   int taskNumber = 0;
   static bool isLoading = true;
 
-  Future<void> loadTasks(BuildContext context) async {
-    isLoading = true;
-    QuerySnapshot<Object?> documents = await collection.get();
-    isLoading = false;
-    taskNumber = documents.size;
-    Navigator.popAndPushNamed(context, TodoView.path);
-    //AutoRouter.of(context).popAndPush(const TodoRoute());
-    notifyListeners();
-    return;
+  Future loadTasks() async {
+    try {
+      isLoading = true;
+      QuerySnapshot<Object?> documents = await collection.get();
+      isLoading = false;
+      taskNumber = documents.size;
+    } catch (e) {
+      print(e);
+    }
   }
 
+  /// Unused
   void getTask({required String uuid}) async {}
   void addTask(Task task) async {
     collection.doc(task.uuid).set({

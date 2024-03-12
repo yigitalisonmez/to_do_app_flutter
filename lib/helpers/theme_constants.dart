@@ -17,6 +17,9 @@ const kDrawerColorLight = Color(0xffc2cef9);
 const temp = Color(0xff6a8cec);
 const kTaskListBackgroundLight = Color(0xfffff1eb);
 
+const kShimmerBaseColor = Colors.grey;
+const kShimmerHighlightColor = Colors.white60;
+
 const List<Color> homePagePalette = [
   Color(0xfffffdfa),
   Color(0xfffff1eb),
