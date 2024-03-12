@@ -1,18 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
-import 'package:todoey_flutter/helpers/widgets/tasks_list.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:todoey_flutter/helpers/widgets/task_tile.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
 import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
-import '../../models/task/task_data.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:todoey_flutter/helpers/theme_constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 part 'package:todoey_flutter/views/todo_view/sub_view/custom_drawer.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/navigation_bar.dart';
+part 'package:todoey_flutter/views/todo_view/sub_view/todo_list.dart';
 
 class TodoView extends StatefulWidget {
   static String path = '/todo-view';
@@ -64,7 +66,7 @@ class _TodoViewState extends State<TodoView> {
                       fontFamily: 'DotGothic16'),
                 ),
                 Text(
-                  '${Provider.of<TaskData>(context, listen: true).taskNumber} Tasks',
+                  '${Provider.of<TodoViewModel>(context, listen: true).taskNumber} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
@@ -79,7 +81,9 @@ class _TodoViewState extends State<TodoView> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: const TaskList(),
+              child: Provider.of<TodoViewModel>(context).isLoading
+                  ? _buildTodoShimmer()
+                  : _getTodoList(context),
             ),
           ),
         ],

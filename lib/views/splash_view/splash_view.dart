@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/helpers/widgets/custom_shimmer.dart';
-import 'package:todoey_flutter/models/task/task_data.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey_flutter/view_models/todo_view_model.dart';
 import 'package:todoey_flutter/views/test_view.dart';
 import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 
@@ -18,7 +17,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Provider.of<TaskData>(context).loadTasks(),
+        future: Provider.of<TodoViewModel>(context).loadTasks(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return const TodoView(); // Your widget when initialization is complete

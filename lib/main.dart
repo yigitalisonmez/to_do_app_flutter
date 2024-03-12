@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
-import 'package:todoey_flutter/models/task/task_data.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
 import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
@@ -39,13 +38,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TaskData(),
+          create: (context) => TodoViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => NoteData(),
         ),
         ChangeNotifierProvider(
-          create: (context) => TodoScreenViewModel(),
+          create: (context) => TodoViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => RoutinesViewModel(),
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         //routerConfig: _appRouter.config(),
-        initialRoute: SplashView.path,
+        initialRoute: TodoView.path,
         routes: {
           SplashView.path: (context) => const SplashView(),
           TodoView.path: (context) => const TodoView(),
