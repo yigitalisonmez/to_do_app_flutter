@@ -24,6 +24,7 @@ class TodoViewModel extends ChangeNotifier {
     try {
       QuerySnapshot<Object?> documents = await collection.get();
       taskNumber = documents.size;
+      await Future.delayed(Duration(milliseconds: 300));
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -31,8 +32,6 @@ class TodoViewModel extends ChangeNotifier {
     }
   }
 
-  /// Unused
-  void getTask({required String uuid}) async {}
   void addTask(Task task) async {
     collection.doc(task.uuid).set({
       'uuid': task.uuid,

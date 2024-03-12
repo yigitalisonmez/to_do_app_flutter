@@ -5,6 +5,7 @@ import 'package:todoey_flutter/models/note/note_data.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
 import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
+import 'package:todoey_flutter/views/home_view/home_view.dart';
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
 import 'package:todoey_flutter/views/splash_view/splash_view.dart';
@@ -52,9 +53,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         //routerConfig: _appRouter.config(),
-        initialRoute: TodoView.path,
+        initialRoute: HomeView.path,
         routes: {
           SplashView.path: (context) => const SplashView(),
+          HomeView.path: (context) => HomeView(),
           TodoView.path: (context) => const TodoView(),
           AddTodoView.path: (context) => AddTodoView(),
           NotesView.path: (context) => NotesView(),
