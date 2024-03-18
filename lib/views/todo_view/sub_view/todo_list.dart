@@ -20,9 +20,9 @@ Widget _getTodoList(BuildContext context) {
         );
       }
       int snapshotSize = snapshot.data!.size;
-      Provider.of<TodoViewModel>(context).taskNumber = snapshotSize;
+      Provider.of<TodoViewModel>(context).todoNumber = snapshotSize;
       return ListView.builder(
-        itemCount: Provider.of<TodoViewModel>(context).taskNumber,
+        itemCount: Provider.of<TodoViewModel>(context).todoNumber,
         itemBuilder: (_, int index) {
           dynamic currentTask = snapshot.data!.docs[index].data();
           return TaskTile(

@@ -17,25 +17,19 @@ class RoutineAdapter extends TypeAdapter<Routine> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Routine(
-      taskDescription: fields[0] as String,
-      isDone: fields[1] as bool,
-      date: fields[3] as DateTime,
-      reward: fields[2] as Reward,
+      routineList: (fields[0] as List).cast<Todo>(),
+      dayTime: fields[1] as DayTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Routine obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.taskDescription)
-      ..writeByte(1)
-      ..write(obj.isDone)
       ..writeByte(2)
-      ..write(obj.reward)
-      ..writeByte(3)
-      ..write(obj.date);
+      ..writeByte(0)
+      ..write(obj.routineList)
+      ..writeByte(1)
+      ..write(obj.dayTime);
   }
 
   @override
@@ -45,6 +39,55 @@ class RoutineAdapter extends TypeAdapter<Routine> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is RoutineAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class DayTimeAdapter extends TypeAdapter<DayTime> {
+  @override
+  final int typeId = 4;
+
+  @override
+  DayTime read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return DayTime.Morning;
+      case 1:
+        return DayTime.Afternoon;
+      case 2:
+        return DayTime.Evening;
+      case 3:
+        return DayTime.Night;
+      default:
+        return DayTime.Morning;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, DayTime obj) {
+    switch (obj) {
+      case DayTime.Morning:
+        writer.writeByte(0);
+        break;
+      case DayTime.Afternoon:
+        writer.writeByte(1);
+        break;
+      case DayTime.Evening:
+        writer.writeByte(2);
+        break;
+      case DayTime.Night:
+        writer.writeByte(3);
+        break;
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DayTimeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

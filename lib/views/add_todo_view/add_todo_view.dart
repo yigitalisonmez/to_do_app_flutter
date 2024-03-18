@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
-import 'package:todoey_flutter/models/task/task.dart';
+import 'package:todoey_flutter/models/todo/todo.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
 
 class AddTodoView extends StatelessWidget {
@@ -43,10 +43,10 @@ class AddTodoView extends StatelessWidget {
               TextButton(
                   onPressed: () {
                     Provider.of<TodoViewModel>(context, listen: false).addTask(
-                        Task(
-                            taskDescription: taskTitle!,
+                        Todo(
+                            todoDescription: taskTitle!,
                             time: DateTime.now(),
-                            taskState: false));
+                            todoState: false));
 
                     Navigator.pop(context);
                   },

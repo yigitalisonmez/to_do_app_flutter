@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/models/task/task.dart';
+import 'package:todoey_flutter/models/todo/todo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TodoViewModel extends ChangeNotifier {
@@ -11,19 +11,19 @@ class TodoViewModel extends ChangeNotifier {
   bool isLoading = true;
 
   final Stream<QuerySnapshot<Map<String, dynamic>>>? stream =
-      FirebaseFirestore.instance.collection('tasks').snapshots();
+      FirebaseFirestore.instance.collection('todos').snapshots();
 
   static CollectionReference collection =
-      FirebaseFirestore.instance.collection('tasks');
+      FirebaseFirestore.instance.collection('todos');
 
-  List<Task> taskList = [];
+  List<Todo> todoList = [];
 
-  int taskNumber = 0;
+  int todoNumber = 0;
 
   Future loadTasks() async {
     try {
       QuerySnapshot<Object?> documents = await collection.get();
-      taskNumber = documents.size;
+      todoNumber = documents.size;
       await Future.delayed(Duration(milliseconds: 300));
       isLoading = false;
       notifyListeners();
@@ -32,14 +32,14 @@ class TodoViewModel extends ChangeNotifier {
     }
   }
 
-  void addTask(Task task) async {
-    collection.doc(task.uuid).set({
-      'uuid': task.uuid,
-      'taskDescription': task.taskDescription,
-      'taskState': task.taskState,
-      'time': task.time
+  void addTask(Todo todo) async {
+    collection.doc(todo.uuid).set({
+      'uuid': todo.uuid,
+      'todoDescription': todo.todoDescription,
+      'todoState': todo.todoState,
+      'time': todo.time
     });
-    taskNumber++;
+    todoNumber++;
     notifyListeners();
   }
 
@@ -47,13 +47,13 @@ class TodoViewModel extends ChangeNotifier {
     required String uuid,
     required bool currTaskState,
   }) async {
-    collection.doc(uuid).update({'taskState': !currTaskState});
+    collection.doc(uuid).update({'todoState': !currTaskState});
     notifyListeners();
   }
 
   void deleteTask({required String uuid}) {
     collection.doc(uuid).delete();
-    taskNumber--;
+    todoNumber--;
     notifyListeners();
   }
 
@@ -61,12 +61,12 @@ class TodoViewModel extends ChangeNotifier {
     required String uuid,
     required String newTaskDescription,
   }) {
-    collection.doc(uuid).update({'taskDescription': newTaskDescription});
+    collection.doc(uuid).update({'todoDescription': newTaskDescription});
     notifyListeners();
   }
 
   void setTaskNumber({required int snapshotSize}) {
-    taskNumber = snapshotSize;
+    todoNumber = snapshotSize;
     notifyListeners();
   }
 }

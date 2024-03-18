@@ -66,7 +66,7 @@ class _TodoViewState extends State<TodoView> {
                       fontFamily: 'DotGothic16'),
                 ),
                 Text(
-                  '${Provider.of<TodoViewModel>(context, listen: true).taskNumber} Tasks',
+                  '${Provider.of<TodoViewModel>(context, listen: true).todoNumber} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],

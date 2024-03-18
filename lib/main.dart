@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/note/note_data.dart';
+import 'package:todoey_flutter/view_models/home_view_model.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
 import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => HomeViewModel(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => TodoViewModel(),
         ),
         ChangeNotifierProvider(
@@ -49,7 +53,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => RoutinesViewModel(),
-        )
+        ),
       ],
       child: MaterialApp(
         //routerConfig: _appRouter.config(),
