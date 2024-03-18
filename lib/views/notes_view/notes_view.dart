@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
-import 'package:todoey_flutter/models/note/note_data.dart';
-
 import 'package:todoey_flutter/helpers/widgets/confirmation_dialog.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_note_card.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey_flutter/view_models/notes_view_model.dart';
 import 'package:todoey_flutter/views/notes_view/note_content_view.dart';
 import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 import '../../models/note/note.dart';
@@ -17,8 +16,7 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final noteData = Provider.of<NoteData>(context);
-
+    final noteData = Provider.of<NotesViewModel>(context);
     if (noteData.boxLength == -1) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -37,17 +35,18 @@ class NotesView extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Provider.of<NoteData>(context).noteBox.length == 0
+          child: Provider.of<NotesViewModel>(context).noteBox.length == 0
               ? const Center(child: Text('Nothing here...'))
               : MasonryGridView.count(
-                  itemCount: Provider.of<NoteData>(context).noteBox.length,
+                  itemCount:
+                      Provider.of<NotesViewModel>(context).noteBox.length,
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 10,
                   itemBuilder: (context, index) {
                     ///NOTE CARD
                     return NoteCard(
-                      content: Provider.of<NoteData>(
+                      content: Provider.of<NotesViewModel>(
                         context,
                       ).getNote(index)!.content,
                       color: cardColors[index % 3],
@@ -56,7 +55,7 @@ class NotesView extends StatelessWidget {
                           ((index % 4) == 3 || (index % 4) == 0) ? 180 : 240,
                       onTap: () {
                         Note note =
-                            Provider.of<NoteData>(context, listen: false)
+                            Provider.of<NotesViewModel>(context, listen: false)
                                 .getNote(index)!;
 
                         Navigator.push(
@@ -79,7 +78,7 @@ class NotesView extends StatelessWidget {
                                   index: index,
                                 ));
                       },
-                      title: Provider.of<NoteData>(context)
+                      title: Provider.of<NotesViewModel>(context)
                           .noteBox
                           .getAt(index)!
                           .title,
@@ -124,9 +123,11 @@ class NotesView extends StatelessWidget {
                                     content: '',
                                     date: DateTime.now());
 
-                                Provider.of<NoteData>(context, listen: false)
+                                Provider.of<NotesViewModel>(context,
+                                        listen: false)
                                     .addNote(newNote);
-                                int boxSize = Provider.of<NoteData>(context,
+                                int boxSize = Provider.of<NotesViewModel>(
+                                        context,
                                         listen: false)
                                     .noteBox
                                     .length;

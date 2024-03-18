@@ -5,7 +5,7 @@ final TextEditingController _textEditingController = TextEditingController();
 Widget _getTodoList(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance
-        .collection('tasks')
+        .collection('todos')
         .orderBy('time', descending: true)
         .snapshots(),
     builder: (BuildContext ctx, snapshot) {
@@ -26,13 +26,13 @@ Widget _getTodoList(BuildContext context) {
         itemBuilder: (_, int index) {
           dynamic currentTask = snapshot.data!.docs[index].data();
           return TaskTile(
-            isChecked: currentTask['taskState'],
-            taskTitle: currentTask['taskDescription'],
+            isChecked: currentTask['todoState'],
+            taskTitle: currentTask['todoDescription'],
             checkboxCallback: (status) {
               Provider.of<TodoViewModel>(context, listen: false)
                   .changeTaskStatus(
                 uuid: currentTask['uuid'],
-                currTaskState: currentTask['taskState'],
+                currTaskState: currentTask['todoState'],
               );
             },
             deleteTaskCallback: () {
@@ -40,7 +40,7 @@ Widget _getTodoList(BuildContext context) {
                   .deleteTask(uuid: currentTask['uuid']);
             },
             editTaskCallback: () {
-              String newTaskDescription = currentTask['taskDescription'];
+              String newTaskDescription = currentTask['todoDescription'];
               _textEditingController.text = newTaskDescription;
               showDialog(
                   context: context,
@@ -71,7 +71,7 @@ Widget _getTodoList(BuildContext context) {
                                           listen: false)
                                       .editTask(
                                           uuid: currentTask['uuid'],
-                                          newTaskDescription:
+                                          newTodoDescription:
                                               newTaskDescription!);
 
                                   Navigator.pop(context);

@@ -59,9 +59,9 @@ class TodoViewModel extends ChangeNotifier {
 
   void editTask({
     required String uuid,
-    required String newTaskDescription,
+    required String newTodoDescription,
   }) {
-    collection.doc(uuid).update({'todoDescription': newTaskDescription});
+    collection.doc(uuid).update({'todoDescription': newTodoDescription});
     notifyListeners();
   }
 

@@ -4,7 +4,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/models/note/note.dart';
-import 'package:todoey_flutter/models/note/note_data.dart';
+import 'package:todoey_flutter/view_models/notes_view_model.dart';
 
 class NoteContentView extends StatefulWidget {
   static String path = '/note-content-view';
@@ -49,7 +49,7 @@ class _NoteContentViewState extends State<NoteContentView> {
               icon: Icon(Icons.arrow_back_ios_new),
               onPressed: () {
                 updateNoteContent();
-                Provider.of<NoteData>(context, listen: false).saveNote(
+                Provider.of<NotesViewModel>(context, listen: false).saveNote(
                     newNote: widget.currentNote, index: widget.noteIndex);
                 Navigator.pop(context);
               }),
@@ -57,7 +57,7 @@ class _NoteContentViewState extends State<NoteContentView> {
             IconButton(
                 onPressed: () {
                   updateNoteContent();
-                  Provider.of<NoteData>(context, listen: false).saveNote(
+                  Provider.of<NotesViewModel>(context, listen: false).saveNote(
                       newNote: widget.currentNote, index: widget.noteIndex);
                   Navigator.pop(context);
                 },
