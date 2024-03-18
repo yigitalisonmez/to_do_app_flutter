@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:todoey_flutter/models/note/note.dart';
 
-import 'note.dart';
-
-class NoteData extends ChangeNotifier {
+class NotesViewModel extends ChangeNotifier {
   late Box<Note> noteBox;
 
   NoteData() {
     _initNoteBox();
   }
+
   int boxLength = -1;
   int selectedIndex = -1;
 

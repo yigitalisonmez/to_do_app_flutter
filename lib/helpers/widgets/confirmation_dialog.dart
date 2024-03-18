@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey_flutter/models/note/note_data.dart';
+import 'package:todoey_flutter/view_models/notes_view_model.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   ConfirmationDialog({super.key, required this.index});
@@ -23,7 +23,7 @@ class ConfirmationDialog extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Provider.of<NoteData>(context, listen: false)
+                    Provider.of<NotesViewModel>(context, listen: false)
                         .deleteNoteAt(index);
                   },
                   child: const Text('YES'),
