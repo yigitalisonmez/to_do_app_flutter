@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 
 class RoutinesViewModel extends ChangeNotifier {
-  getRandomInt(int number) {
-    return (Random().nextInt(number) + 1);
+  void toggleIsOpen(ValueNotifier<bool> isOpen) {
+    isOpen.value = !(isOpen.value);
+    notifyListeners();
   }
 }

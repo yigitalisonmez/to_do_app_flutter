@@ -12,7 +12,7 @@ class HomeView extends StatefulWidget {
   static String path = '/home-view';
   int _selectedIndex = 1;
   List<Widget> screens = [
-    const TodoView(),
+    TodoView(),
     NotesView(),
     const RoutinesView(),
   ];
@@ -28,7 +28,7 @@ class HomeView extends StatefulWidget {
       iconColor: Colors.white,
     ),
     const GButton(
-      icon: Icons.person_2_outlined,
+      icon: Icons.calendar_today,
       text: 'Profile',
       iconColor: Colors.white,
     )

@@ -25,7 +25,10 @@ class NotesView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Center(
-            child: Text('NOTES'),
+            child: Text(
+              'NOTES',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           actions: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))

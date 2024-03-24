@@ -4,8 +4,9 @@ import 'package:shimmer/shimmer.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/helpers/widgets/task_tile.dart';
+import 'package:todoey_flutter/models/todo/todo.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
-import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
+
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +16,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/custom_drawer.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/navigation_bar.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/todo_list.dart';
+part 'package:todoey_flutter/views/todo_view/sub_view/add_todo_bottom_sheet.dart';
 
 class TodoView extends StatefulWidget {
   static String path = '/todo-view';
-  const TodoView({super.key});
+  final TextEditingController _textEditingController = TextEditingController();
+
+  TodoView({super.key});
 
   @override
   State<TodoView> createState() => _TodoViewState();
@@ -30,12 +34,10 @@ class _TodoViewState extends State<TodoView> {
     return Scaffold(
       appBar: AppBar(),
       drawer: const MyDrawer(),
-      //bottomNavigationBar: animatedNavigationBar(context),
       floatingActionButton: FloatingActionButton(
           child: const Icon(CupertinoIcons.add, color: Colors.white),
           onPressed: () {
-            showModalBottomSheet(
-                builder: (context) => AddTodoView(), context: context);
+            _buildAddTodoBottomSheet(context);
           }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,9 +53,10 @@ class _TodoViewState extends State<TodoView> {
                   child: Text(
                     '${DateFormat('EEE dd , MMM').format(DateTime.now())} ',
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300),
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10.0),

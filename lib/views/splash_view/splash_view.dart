@@ -20,7 +20,7 @@ class _SplashViewState extends State<SplashView> {
         future: Provider.of<TodoViewModel>(context).loadTasks(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return const TodoView(); // Your widget when initialization is complete
+            return TodoView(); // Your widget when initialization is complete
           } else {
             return const TestView(); // Your loading indicator or placeholder
           }

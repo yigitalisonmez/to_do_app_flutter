@@ -5,7 +5,6 @@ import 'package:todoey_flutter/view_models/home_view_model.dart';
 import 'package:todoey_flutter/view_models/notes_view_model.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
-import 'package:todoey_flutter/views/add_todo_view/add_todo_view.dart';
 import 'package:todoey_flutter/views/home_view/home_view.dart';
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
@@ -49,9 +48,6 @@ class MyApp extends StatelessWidget {
           create: (context) => NotesViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (context) => TodoViewModel(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => RoutinesViewModel(),
         ),
       ],
@@ -61,8 +57,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SplashView.path: (context) => const SplashView(),
           HomeView.path: (context) => HomeView(),
-          TodoView.path: (context) => const TodoView(),
-          AddTodoView.path: (context) => AddTodoView(),
+          TodoView.path: (context) => TodoView(),
           NotesView.path: (context) => NotesView(),
           RoutinesView.path: (context) => const RoutinesView(),
           TestView.path: (context) => const TestView(),
