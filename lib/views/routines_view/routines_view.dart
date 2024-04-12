@@ -1,9 +1,21 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todoey_flutter/helpers/widgets/routine_card.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
+import 'package:todoey_flutter/helpers/theme_constants.dart';
+import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
-import 'package:todoey_flutter/models/todo/todo.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
+import 'package:grock/grock.dart';
+
+part 'sub_view/routine_card.dart';
+part 'sub_view/routine_bottom_sheet.dart';
+
+final formKey = GlobalKey<FormState>();
+final TextEditingController controller = TextEditingController();
 
 class RoutinesView extends StatefulWidget {
   static String path = '/routines-view';
@@ -17,6 +29,9 @@ class _RoutinesViewState extends State<RoutinesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _buildBottomSheet(context),
+      ),
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -25,38 +40,16 @@ class _RoutinesViewState extends State<RoutinesView> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-/*          RoutineCard(
-            Routine(routineList: [
-              Todo(
-                  todoDescription: 'Wake Up',
-                  time: DateTime.now(),
-                  todoState: false),
-              Todo(
-                  todoDescription: 'Make Your Bed',
-                  time: DateTime.now(),
-                  todoState: false),
-              Todo(
-                  todoDescription: 'Wash Your Face',
-                  time: DateTime.now(),
-                  todoState: false),
-            ], dayTime: DayTime.Morning),
-          ),*/
-        ],
-      ),
+      body: ListView.builder(
+          itemCount: Provider.of<RoutinesViewModel>(context).routinesBox.length,
+          itemBuilder: (context, index) {
+            var routines = Provider.of<RoutinesViewModel>(context)
+                .routinesBox
+                .values
+                .toList();
+            return _buildRoutineCard(
+                routineId: routines[index].id, context: context);
+          }),
     );
   }
-
-/*  List<Widget> paintRoadUI(int taskNumber) {
-    List<Widget> road = [];
-    for (var i = 1; i <= 10; ++i) {
-      road.add(
-        Container(
-            child: Image.asset(
-                'assets/tiles/FieldsTile_${Provider.of<RoutinesViewModel>(context).getRandomInt(16)}.png')),
-      );
-    }
-    return road;
-  }*/
 }

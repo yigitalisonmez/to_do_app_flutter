@@ -17,18 +17,24 @@ class RoutineAdapter extends TypeAdapter<Routine> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Routine(
-      routineList: (fields[0] as List).cast<Todo>(),
-      dayTime: fields[1] as DayTime,
+      id: fields[0] as String,
+      routineName: fields[1] as String,
+      routineList: (fields[2] as List).cast<RoutineItem>(),
+      dayTime: fields[3] as DayTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Routine obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.routineList)
+      ..write(obj.id)
       ..writeByte(1)
+      ..write(obj.routineName)
+      ..writeByte(2)
+      ..write(obj.routineList)
+      ..writeByte(3)
       ..write(obj.dayTime);
   }
 
@@ -58,6 +64,8 @@ class DayTimeAdapter extends TypeAdapter<DayTime> {
         return DayTime.Evening;
       case 3:
         return DayTime.Night;
+      case 4:
+        return DayTime.Other;
       default:
         return DayTime.Morning;
     }
@@ -77,6 +85,9 @@ class DayTimeAdapter extends TypeAdapter<DayTime> {
         break;
       case DayTime.Night:
         writer.writeByte(3);
+        break;
+      case DayTime.Other:
+        writer.writeByte(4);
         break;
     }
   }

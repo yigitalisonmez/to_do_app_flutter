@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:todoey_flutter/models/todo/todo.dart';
+import 'package:todoey_flutter/models/routine/routine_item.dart';
 
 // dart run build_runner build
 part 'routine.g.dart';
@@ -14,29 +14,42 @@ enum DayTime {
   Evening,
   @HiveField(3)
   Night,
+  @HiveField(4)
+  Other,
 }
 
-String getDayTimeName(DayTime time) {
-  switch (time) {
-    case DayTime.Morning:
-      return 'Morning';
-    case DayTime.Afternoon:
-      return 'Afternoon';
-    case DayTime.Evening:
-      return 'Evening';
-    case DayTime.Night:
-      return 'Night';
-    default:
-      return '';
+extension DayTimeEx on DayTime {
+  getText() {
+    switch (this) {
+      case DayTime.Morning:
+        return 'Morning';
+      case DayTime.Afternoon:
+        return 'Afternoon';
+      case DayTime.Evening:
+        return 'Evening';
+      case DayTime.Night:
+        return 'Night';
+      case DayTime.Other:
+        return 'Other';
+    }
   }
 }
 
 @HiveType(typeId: 2)
 class Routine {
   @HiveField(0)
-  List<Todo> routineList;
+  String id;
   @HiveField(1)
+  String routineName;
+  @HiveField(2)
+  List<RoutineItem> routineList;
+  @HiveField(3)
   DayTime dayTime;
 
-  Routine({required this.routineList, required this.dayTime});
+  Routine({
+    required this.id,
+    required this.routineName,
+    required this.routineList,
+    required this.dayTime,
+  });
 }

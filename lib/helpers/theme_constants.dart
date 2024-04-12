@@ -20,18 +20,20 @@ const kTaskListBackgroundLight = Color(0xfffff1eb);
 const kShimmerBaseColor = Colors.grey;
 const kShimmerHighlightColor = Colors.white60;
 
-const List<Color> homePagePalette = [
-  Color(0xfffffdfa),
-  Color(0xfffff1eb),
-  Color(0xfffd8466),
-  Color(0xff6a8cec)
+const List<Color> palette = [
+  Color(0xff070F2B),
+  Color(0xff1B1A55),
+  Color(0xff535C91),
+  Color(0xff9290C3),
 ];
+
 const List<Color> cardColors = [
   Color(0xfff5f378),
   Color(0xffdcc1ff),
   Color(0xffec704b)
 ];
 
+/// DARK THEME
 ThemeData darkMode = ThemeData(
   textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
   brightness: Brightness.dark,
@@ -93,6 +95,11 @@ ThemeData darkMode = ThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all(cardColors[1]),
     ),
+  ),
+
+  /// LIST TILE THEME
+  listTileTheme: ListTileThemeData(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
   ),
 );
 

@@ -40,15 +40,18 @@ _buildAddTodoBottomSheet(BuildContext context) {
                   const SizedBox(height: 20.0),
                   TextButton(
                       onPressed: () {
-                        Provider.of<TodoViewModel>(context, listen: false)
-                            .addTask(
-                          Todo(
-                            todoDescription: _textEditingController.text,
-                            time: DateTime.now(),
-                            todoState: false,
-                          ),
-                        );
-                        Navigator.pop(context);
+                        RegExp regex = RegExp(r'[a-zA-Z0-9]');
+                        if (regex.hasMatch(_textEditingController.text)) {
+                          Provider.of<TodoViewModel>(context, listen: false)
+                              .addTask(
+                            Todo(
+                              todoDescription: _textEditingController.text,
+                              time: DateTime.now(),
+                              todoState: false,
+                            ),
+                          );
+                          Navigator.pop(context);
+                        }
                       },
                       child: const Text(
                         'Add',
