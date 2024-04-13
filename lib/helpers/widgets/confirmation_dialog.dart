@@ -3,8 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:todoey_flutter/view_models/notes_view_model.dart';
 
 class ConfirmationDialog extends StatelessWidget {
-  ConfirmationDialog({super.key, required this.index});
+  const ConfirmationDialog(
+      {super.key,
+      required this.index,
+      required this.callbackFunction,
+      required this.title});
+
   final int index;
+  final String title;
+  final Function() callbackFunction;
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -15,7 +23,7 @@ class ConfirmationDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Do you want to delete this file?'),
+            Text(title),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,8 +31,9 @@ class ConfirmationDialog extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Provider.of<NotesViewModel>(context, listen: false)
-                        .deleteNoteAt(index);
+/*                    Provider.of<NotesViewModel>(context, listen: false)
+                        .deleteNoteAt(index);*/
+                    callbackFunction.call();
                   },
                   child: const Text('YES'),
                 ),
