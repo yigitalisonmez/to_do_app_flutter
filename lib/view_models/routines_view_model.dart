@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:grock/grock.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:hive/hive.dart';
 import 'package:todoey_flutter/models/routine/routine_item.dart';
@@ -40,7 +41,14 @@ class RoutinesViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleCheckbox(Routine routine, int index) {}
+  void toggleCheckbox(String routineId, int index) {
+    Routine? currRoutine = getRoutineById(routineId);
+    if (currRoutine.isNotNull) {
+      currRoutine!.routineList[index].isDone =
+          !(currRoutine!.routineList[index].isDone);
+    }
+    notifyListeners();
+  }
 
   /// CREATE A ROUTINE
   void createRoutine(String routineName) {
@@ -98,7 +106,13 @@ class RoutinesViewModel extends ChangeNotifier {
   }
 
   /// DELETE ITEM FROM ROUTINE
-  void deleteItemFromRoutine() {}
+  void deleteItemFromRoutine({required String routineId, required index}) {
+    Routine? currRoutine = getRoutineById(routineId);
+    if (currRoutine.isNotNull) {
+      currRoutine!.routineList.removeAt(index);
+    }
+    notifyListeners();
+  }
 
   /// EDIT ROUTINE
 
