@@ -4,12 +4,8 @@ import 'package:todoey_flutter/view_models/notes_view_model.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog(
-      {super.key,
-      required this.index,
-      required this.callbackFunction,
-      required this.title});
+      {super.key, required this.callbackFunction, required this.title});
 
-  final int index;
   final String title;
   final Function() callbackFunction;
 
