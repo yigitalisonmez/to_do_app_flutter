@@ -59,15 +59,17 @@ class RoutinesViewModel extends ChangeNotifier {
 
   /// GET ROUTINES
   dynamic getAllRoutines() {
-/*    for (var key in routinesBox.keys) {
+    for (var key in routinesBox.keys) {
       print(key);
       print(routinesBox.get(key)!.id);
-    }*/
+    }
     return routinesBox.values;
   }
 
   /// GET ROUTINE BY ID
-  Routine? getRoutineById(String routineId) => routinesBox.get(routineId);
+  Routine? getRoutineById(String routineId) {
+    return routinesBox.get(routineId);
+  }
 
   /// TODO HATALIIIII
 /*  /// UPDATE A ROUTINE
@@ -78,7 +80,10 @@ class RoutinesViewModel extends ChangeNotifier {
   }*/
 
   /// DELETE ROUTINE
-  void deleteRoutineById(String routineId) => routinesBox.delete(routineId);
+  void deleteRoutineById(String routineId) {
+    routinesBox.delete(routineId);
+    notifyListeners();
+  }
 
   /// ADD ITEM TO ROUTINE
   void addItemToRoutine({
@@ -92,11 +97,15 @@ class RoutinesViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// DELETE ITEM FROM ROUTINE
   void deleteItemFromRoutine() {}
 
-  /// DELETE ITEM FROM ROUTINE
-
   /// EDIT ROUTINE
+
+  /// DELETE ALL ROUTINES
+  void deleteAllRoutines() async {
+    await routinesBox.clear();
+  }
 }
 
 class ChipData {

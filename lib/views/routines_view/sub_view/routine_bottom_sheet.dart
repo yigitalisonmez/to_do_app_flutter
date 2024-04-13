@@ -1,6 +1,6 @@
 part of '../routines_view.dart';
 
-_buildBottomSheet(BuildContext context) {
+_buildBottomSheet(BuildContext context, GlobalKey<FormState> formKey) {
   return showModalBottomSheet(
     clipBehavior: Clip.antiAliasWithSaveLayer,
     shape: const RoundedRectangleBorder(
@@ -12,7 +12,7 @@ _buildBottomSheet(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return CustomModalBottomSheet(
-        key: formKey,
+        formKey: formKey,
         children: [
           const Text(
             'Create a Routine!',

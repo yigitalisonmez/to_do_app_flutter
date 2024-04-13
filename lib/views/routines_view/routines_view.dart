@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
+import 'package:todoey_flutter/helpers/widgets/confirmation_dialog.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:provider/provider.dart';
@@ -29,9 +30,6 @@ class _RoutinesViewState extends State<RoutinesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _buildBottomSheet(context),
-      ),
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -50,6 +48,9 @@ class _RoutinesViewState extends State<RoutinesView> {
             return _buildRoutineCard(
                 routineId: routines[index].id, context: context);
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _buildBottomSheet(context, formKey),
+      ),
     );
   }
 }

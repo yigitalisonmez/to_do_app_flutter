@@ -40,8 +40,11 @@ _buildRoutineCard({required String routineId, required BuildContext context}) {
                         PopupMenuItem(
                           child: ListTile(
                             title: const Text('Add habit'),
-                            onTap: () => _addHabitFunction(
-                                context: context, routine: routine),
+                            onTap: () {
+                              Navigator.pop(context);
+                              _addHabitFunction(
+                                  context: context, routine: routine);
+                            },
                           ),
                         ),
                         PopupMenuItem(
@@ -50,6 +53,17 @@ _buildRoutineCard({required String routineId, required BuildContext context}) {
                             onTap: () {
                               // Handle share action
                               Navigator.pop(context); // Close menu
+                            },
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: ListTile(
+                            title: const Text('Delete Routine'),
+                            onTap: () {
+                              // Handle share action
+                              Navigator.pop(context);
+                              _deleteRoutineFunction(
+                                  context: context, routineId: routineId);
                             },
                           ),
                         ),
@@ -103,8 +117,6 @@ _buildRoutineTile(
 }
 
 _addHabitFunction({required BuildContext context, required Routine routine}) {
-  // Pop settings menu
-  Navigator.pop(context);
   // Show habit adding UI
   showModalBottomSheet(
     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -160,6 +172,7 @@ _addHabitFunction({required BuildContext context, required Routine routine}) {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 Navigator.pop(context);
+                // Add habits to routine
                 Provider.of<RoutinesViewModel>(context, listen: false)
                     .addItemToRoutine(
                         routineItemTitle: controller.text,
@@ -176,4 +189,13 @@ _addHabitFunction({required BuildContext context, required Routine routine}) {
 }
 
 _deleteRoutineFunction(
-    {required BuildContext context, required String routineId}) {}
+    {required BuildContext context, required String routineId}) {
+  return showDialog(
+    context: context,
+    builder: (builder) => ConfirmationDialog(
+        title: 'Do you want to delete this Routine?',
+        callbackFunction: () =>
+            Provider.of<RoutinesViewModel>(context, listen: false)
+                .deleteRoutineById(routineId)),
+  );
+}

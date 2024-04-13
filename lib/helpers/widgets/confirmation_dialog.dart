@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todoey_flutter/view_models/notes_view_model.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog(
@@ -27,8 +25,6 @@ class ConfirmationDialog extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-/*                    Provider.of<NotesViewModel>(context, listen: false)
-                        .deleteNoteAt(index);*/
                     callbackFunction.call();
                   },
                   child: const Text('YES'),
