@@ -34,7 +34,7 @@ class NotesView extends StatelessWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
-        drawer: MyDrawer(),
+        drawer: const MyDrawer(),
         backgroundColor: Theme.of(context).primaryColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),

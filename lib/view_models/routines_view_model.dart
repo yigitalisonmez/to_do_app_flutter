@@ -44,51 +44,55 @@ class RoutinesViewModel extends ChangeNotifier {
 
   /// CREATE A ROUTINE
   void createRoutine(String routineName) {
-    routinesBox.add(
+    String newRoutineId = const Uuid().v1();
+    routinesBox.put(
+      newRoutineId,
       Routine(
-        id: const Uuid().v1(),
+        id: newRoutineId,
         routineName: routineName,
         routineList: [],
         dayTime: selectedDayTime,
       ),
     );
+    notifyListeners();
   }
 
   /// GET ROUTINES
   dynamic getAllRoutines() {
+/*    for (var key in routinesBox.keys) {
+      print(key);
+      print(routinesBox.get(key)!.id);
+    }*/
     return routinesBox.values;
   }
 
   /// GET ROUTINE BY ID
-  Routine? getRoutineById(String routineId) {
-    for (var routine in routinesBox.values) {
-      if (routine.id == routineId) {
-        return routine;
-      }
-    }
-    return null;
-  }
+  Routine? getRoutineById(String routineId) => routinesBox.get(routineId);
 
-  /// UPDATE A ROUTINE
+  /// TODO HATALIIIII
+/*  /// UPDATE A ROUTINE
   void updateRoutine(RoutineItem newItem, int index, Routine currRoutine) {
     currRoutine.routineList[index] = newItem;
     routinesBox.put(currRoutine.id, currRoutine);
     notifyListeners();
-  }
+  }*/
 
   /// DELETE ROUTINE
-  void deleteRoutineById(String routineId) {
-    /*routinesBox.delete(key)*/
-  }
+  void deleteRoutineById(String routineId) => routinesBox.delete(routineId);
 
   /// ADD ITEM TO ROUTINE
-  void addItemToRoutine(
-      {required Routine currRoutine, required String routineItemTitle}) {
+  void addItemToRoutine({
+    required Routine currRoutine,
+    required String routineItemTitle,
+  }) async {
     if (currRoutine != null) {
       currRoutine.routineList.add(RoutineItem(title: routineItemTitle));
-      notifyListeners();
+      await routinesBox.put(currRoutine.id, currRoutine);
     }
+    notifyListeners();
   }
+
+  void deleteItemFromRoutine() {}
 
   /// DELETE ITEM FROM ROUTINE
 

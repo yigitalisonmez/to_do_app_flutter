@@ -85,10 +85,12 @@ _buildRoutineTile(
     child: Material(
       borderRadius: BorderRadius.circular(12),
       child: ListTile(
-        title: Text(Provider.of<RoutinesViewModel>(context)
-            .getRoutineById(routineId)!
-            .routineList[index]
-            .title),
+        title: Text(
+          Provider.of<RoutinesViewModel>(context)
+              .getRoutineById(routineId)!
+              .routineList[index]
+              .title,
+        ),
         tileColor: palette[0],
         leading: Checkbox(
           fillColor: MaterialStateProperty.all(palette[2]),
