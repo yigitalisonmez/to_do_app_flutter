@@ -45,8 +45,7 @@ class _RoutinesViewState extends State<RoutinesView> {
                 .routinesBox
                 .values
                 .toList();
-            return _buildRoutineCard(
-                routineId: routines[index].id, context: context);
+            return RoutineCard(routineId: routines[index].id);
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _buildBottomSheet(context, formKey),

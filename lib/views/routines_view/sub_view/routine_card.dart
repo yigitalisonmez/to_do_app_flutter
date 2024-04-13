@@ -1,93 +1,105 @@
 part of '../routines_view.dart';
 
-_buildRoutineCard({required String routineId, required BuildContext context}) {
-  final ValueNotifier<bool> isOpenNotifier = ValueNotifier(false);
-  Routine? routine =
-      Provider.of<RoutinesViewModel>(context).getRoutineById(routineId);
-  return ValueListenableBuilder<bool>(
-    valueListenable: isOpenNotifier,
-    builder: (context, isOpen, child) {
-      return Container(
-        margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: palette[1],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: InkWell(
-                onTap: () => isOpenNotifier.value = !isOpenNotifier.value,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                        child: Text(
-                      routine!.routineName,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    )),
-                    const Spacer(),
+class RoutineCard extends StatefulWidget {
+  final String routineId;
+  const RoutineCard({super.key, required this.routineId});
 
-                    /// SETTINGS
-                    PopupMenuButton(
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: ListTile(
-                            title: const Text('Add habit'),
-                            onTap: () {
-                              Navigator.pop(context);
-                              _addHabitFunction(
-                                  context: context, routine: routine);
-                            },
+  @override
+  State<RoutineCard> createState() => _RoutineCardState();
+}
+
+class _RoutineCardState extends State<RoutineCard> {
+  final ValueNotifier<bool> isOpenNotifier = ValueNotifier(false);
+  @override
+  Widget build(BuildContext context) {
+    Routine? routine = Provider.of<RoutinesViewModel>(context)
+        .getRoutineById(widget.routineId);
+    return ValueListenableBuilder<bool>(
+      valueListenable: isOpenNotifier,
+      builder: (context, isOpen, child) {
+        return Container(
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: palette[1],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: InkWell(
+                  onTap: () => isOpenNotifier.value = !isOpenNotifier.value,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                          child: Text(
+                        routine!.routineName,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      )),
+                      const Spacer(),
+
+                      /// SETTINGS
+                      PopupMenuButton(
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: ListTile(
+                              title: const Text('Add habit'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                _addHabitFunction(
+                                    context: context, routine: routine);
+                              },
+                            ),
                           ),
-                        ),
-                        PopupMenuItem(
-                          child: ListTile(
-                            title: const Text('Re-order habits'),
-                            onTap: () {
-                              // Handle share action
-                              Navigator.pop(context); // Close menu
-                            },
+                          PopupMenuItem(
+                            child: ListTile(
+                              title: const Text('Re-order habits'),
+                              onTap: () {
+                                // Handle share action
+                                Navigator.pop(context); // Close menu
+                              },
+                            ),
                           ),
-                        ),
-                        PopupMenuItem(
-                          child: ListTile(
-                            title: const Text('Delete Routine'),
-                            onTap: () {
-                              // Handle share action
-                              Navigator.pop(context);
-                              _deleteRoutineFunction(
-                                  context: context, routineId: routineId);
-                            },
+                          PopupMenuItem(
+                            child: ListTile(
+                              title: const Text('Delete Routine'),
+                              onTap: () {
+                                // Handle share action
+                                Navigator.pop(context);
+                                _deleteRoutineFunction(
+                                    context: context,
+                                    routineId: widget.routineId);
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                      icon: const Icon(Icons.more_vert_sharp),
-                    ),
-                  ],
+                        ],
+                        icon: const Icon(Icons.more_vert_sharp),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            /// TILES
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: isOpen ? routine.routineList.length : 0,
-                itemBuilder: (context, index) {
-                  return _buildRoutineTile(
-                      routineId: routine.id, index: index, context: context);
-                })
-          ],
-        ),
-      );
-    },
-  );
+              /// TILES
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: isOpen ? routine.routineList.length : 0,
+                  itemBuilder: (context, index) {
+                    return _buildRoutineTile(
+                        routineId: routine.id, index: index, context: context);
+                  })
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
 
 _buildRoutineTile(
