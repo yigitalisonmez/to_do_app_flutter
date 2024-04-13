@@ -76,10 +76,16 @@ class NotesView extends StatelessWidget {
                       },
                       onLongPress: () {
                         showDialog(
-                            context: context,
-                            builder: (builder) => ConfirmationDialog(
-                                  index: index,
-                                ));
+                          context: context,
+                          builder: (builder) => ConfirmationDialog(
+                            index: index,
+                            title: 'Do you want to delete this file?',
+                            callbackFunction: () => Provider.of<NotesViewModel>(
+                                    context,
+                                    listen: false)
+                                .deleteNoteAt(index),
+                          ),
+                        );
                       },
                       title: Provider.of<NotesViewModel>(context)
                           .noteBox

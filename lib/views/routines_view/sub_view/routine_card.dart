@@ -174,3 +174,6 @@ _addHabitFunction({required BuildContext context, required Routine routine}) {
     },
   );
 }
+
+_deleteRoutineFunction(
+    {required BuildContext context, required String routineId}) {}
