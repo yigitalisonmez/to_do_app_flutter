@@ -95,11 +95,19 @@ class _RoutineCardState extends State<RoutineCard> {
               ),
 
               /// TILES
-              ListView.builder(
+              ReorderableListView.builder(
+                  onReorder: (int oldIndex, int newIndex) =>
+                      Provider.of<RoutinesViewModel>(context, listen: false)
+                          .reorderHabits(
+                        oldIndex: oldIndex,
+                        newIndex: newIndex,
+                        routineId: routine.id,
+                      ),
                   shrinkWrap: true,
                   itemCount: isOpen ? routine.routineList.length : 0,
                   itemBuilder: (context, index) {
                     return RoutineTile(
+                      key: ValueKey(index),
                       routineId: routine.id,
                       index: index,
                       toggleIsDoneFunction: () =>

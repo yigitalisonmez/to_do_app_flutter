@@ -43,9 +43,9 @@ class RoutinesViewModel extends ChangeNotifier {
 
   void toggleCheckbox(String routineId, int index) {
     Routine? currRoutine = getRoutineById(routineId);
-    if (currRoutine != null) {
+    if (currRoutine.isNotNull) {
       currRoutine!.routineList[index].isDone =
-          !(currRoutine!.routineList[index].isDone);
+          !(currRoutine.routineList[index].isDone);
     }
     notifyListeners();
   }
@@ -128,6 +128,22 @@ class RoutinesViewModel extends ChangeNotifier {
   /// DELETE ALL ROUTINES
   void deleteAllRoutines() async {
     await routinesBox.clear();
+  }
+
+  void reorderHabits(
+      {required int oldIndex,
+      required int newIndex,
+      required String routineId}) {
+    // an adjustment needed when its on the edge
+    if (oldIndex < newIndex) {
+      newIndex--;
+    }
+
+    Routine routine = getRoutineById(routineId)!;
+    RoutineItem habit = routine.routineList.removeAt(oldIndex);
+    routine.routineList.insert(newIndex, habit);
+    routinesBox.put(routineId, routine);
+    notifyListeners();
   }
 }
 
