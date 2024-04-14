@@ -43,11 +43,22 @@ class RoutinesViewModel extends ChangeNotifier {
 
   void toggleCheckbox(String routineId, int index) {
     Routine? currRoutine = getRoutineById(routineId);
-    if (currRoutine.isNotNull) {
+    if (currRoutine != null) {
       currRoutine!.routineList[index].isDone =
           !(currRoutine!.routineList[index].isDone);
     }
     notifyListeners();
+  }
+
+  String calculateProgress({required String routineId}) {
+    Routine? routine = getRoutineById(routineId);
+    int count = 0;
+    for (var habit in routine!.routineList) {
+      if (habit.isDone) {
+        count++;
+      }
+    }
+    return '$count/${routine.routineList.length} ';
   }
 
   /// CREATE A ROUTINE
@@ -98,10 +109,8 @@ class RoutinesViewModel extends ChangeNotifier {
     required Routine currRoutine,
     required String routineItemTitle,
   }) async {
-    if (currRoutine != null) {
-      currRoutine.routineList.add(RoutineItem(title: routineItemTitle));
-      await routinesBox.put(currRoutine.id, currRoutine);
-    }
+    currRoutine.routineList.add(RoutineItem(title: routineItemTitle));
+    await routinesBox.put(currRoutine.id, currRoutine);
     notifyListeners();
   }
 

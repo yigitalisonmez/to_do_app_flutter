@@ -4,13 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:grock/grock.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/widgets/confirmation_dialog.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
-import 'package:grock/grock.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 part 'sub_view/routine_card.dart';
 part 'sub_view/routine_bottom_sheet.dart';

@@ -42,7 +42,13 @@ class _RoutineCardState extends State<RoutineCard> {
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       )),
+
                       const Spacer(),
+                      Text(
+                        Provider.of<RoutinesViewModel>(context)
+                            .calculateProgress(routineId: routine.id),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
 
                       /// SETTINGS
                       PopupMenuButton(

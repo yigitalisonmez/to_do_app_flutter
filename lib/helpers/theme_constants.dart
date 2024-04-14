@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+const kBackgroundColorDark = Color(0xff9BA4B5);
+const kPrimaryColorDark = Color(0xff212A3E);
+const kSecondaryColorDark = Color(0xff394867);
+const kTertiaryColorDark = Color(0xffF1F6F9);
+
 const kLightModePrimaryColor = Color(0xfffcfff2);
 const TERTIARY_COLOR_DARK = Color(0xff4A4A4A);
 
 const kScaffoldBackgroundColorLight = Color(0xffbbdfed); //0xffff7e61
-const kScaffoldBackgroundColorDark = Color(0xff1a1a1a);
+const kScaffoldBackgroundColorDark = Color(0xff363434);
 
 const kCheckboxFillColorDark = Color(0xff4A4A4A);
 const kCheckboxFillColorLight = Color(0xffc2cef9);
@@ -38,12 +43,14 @@ ThemeData darkMode = ThemeData(
   textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
   brightness: Brightness.dark,
   primaryColor: const Color(0xff1a1a1a),
-  colorScheme: ColorScheme.dark(
-      brightness: Brightness.dark,
-      background: const Color(0xff0A0E11),
-      primary: const Color(0xff2B2C2E),
-      secondary: Colors.grey.shade700,
-      tertiary: TERTIARY_COLOR_DARK),
+
+  colorScheme: const ColorScheme.dark(
+    brightness: Brightness.dark,
+    background: kBackgroundColorDark,
+    primary: kPrimaryColorDark,
+    secondary: kSecondaryColorDark,
+    tertiary: kTertiaryColorDark,
+  ),
   scaffoldBackgroundColor: kScaffoldBackgroundColorDark,
 
   /// TEXT THEME
@@ -56,7 +63,7 @@ ThemeData darkMode = ThemeData(
 
   ///FLOATING ACTION BUTTON
   floatingActionButtonTheme:
-      const FloatingActionButtonThemeData(backgroundColor: Color(0xff1c1c1d)),
+      const FloatingActionButtonThemeData(backgroundColor: kSecondaryColorDark),
 
   ///CHECKBOX
   checkboxTheme: CheckboxThemeData(
