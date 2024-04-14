@@ -44,6 +44,8 @@ class _RoutineCardState extends State<RoutineCard> {
                       )),
 
                       const Spacer(),
+
+                      /// PROGRESS INDICATOR
                       Text(
                         Provider.of<RoutinesViewModel>(context)
                             .calculateProgress(routineId: routine.id),
@@ -140,8 +142,16 @@ class RoutineTile extends StatelessWidget {
                 .getRoutineById(routineId)!
                 .routineList[index]
                 .title,
+            style: TextStyle(
+              decoration: Provider.of<RoutinesViewModel>(context)
+                      .getRoutineById(routineId)!
+                      .routineList[index]
+                      .isDone
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+            ),
           ),
-          tileColor: palette[0],
+          tileColor: Theme.of(context).colorScheme.secondary,
           leading: Checkbox(
             fillColor: MaterialStateProperty.all(palette[2]),
             value: Provider.of<RoutinesViewModel>(context)
