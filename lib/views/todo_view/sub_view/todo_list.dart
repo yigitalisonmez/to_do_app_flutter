@@ -1,7 +1,5 @@
 part of '../todo_view.dart';
 
-final TextEditingController _textEditingController = TextEditingController();
-
 Widget _getTodoList(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance

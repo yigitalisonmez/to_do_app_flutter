@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
+import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
 import 'package:todoey_flutter/helpers/widgets/task_tile.dart';
 import 'package:todoey_flutter/models/todo/todo.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
@@ -18,9 +19,11 @@ part 'package:todoey_flutter/views/todo_view/sub_view/navigation_bar.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/todo_list.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/add_todo_bottom_sheet.dart';
 
+final TextEditingController _textEditingController = TextEditingController();
+final formKey = GlobalKey<FormState>();
+
 class TodoView extends StatefulWidget {
   static String path = '/todo-view';
-  final TextEditingController _textEditingController = TextEditingController();
 
   TodoView({super.key});
 
@@ -36,9 +39,7 @@ class _TodoViewState extends State<TodoView> {
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton(
           child: const Icon(CupertinoIcons.add, color: Colors.white),
-          onPressed: () {
-            _buildAddTodoBottomSheet(context);
-          }),
+          onPressed: () => _buildAddTodoBottomSheet(context)),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
