@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
+import 'package:todoey_flutter/models/daily_task/daily_task.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:todoey_flutter/models/routine/routine_item.dart';
+import 'package:todoey_flutter/view_models/daily_tasks_view_model.dart';
 import 'package:todoey_flutter/view_models/home_view_model.dart';
 import 'package:todoey_flutter/view_models/notes_view_model.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
@@ -29,6 +31,8 @@ void main() async {
   Hive.registerAdapter(RoutineAdapter());
   Hive.registerAdapter(DayTimeAdapter());
   Hive.registerAdapter(RoutineItemAdapter());
+  Hive.registerAdapter(DailyTaskAdapter());
+  Hive.registerAdapter(TaskAdapter());
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -54,6 +58,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => RoutinesViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DailyTasksViewModel(),
         ),
       ],
       child: MaterialApp(

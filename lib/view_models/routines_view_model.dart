@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:grock/grock.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:hive/hive.dart';
 import 'package:todoey_flutter/models/routine/routine_item.dart';
@@ -43,8 +42,8 @@ class RoutinesViewModel extends ChangeNotifier {
 
   void toggleCheckbox(String routineId, int index) {
     Routine? currRoutine = getRoutineById(routineId);
-    if (currRoutine.isNotNull) {
-      currRoutine!.routineList[index].isDone =
+    if (currRoutine != null) {
+      currRoutine.routineList[index].isDone =
           !(currRoutine.routineList[index].isDone);
     }
     notifyListeners();
@@ -117,7 +116,7 @@ class RoutinesViewModel extends ChangeNotifier {
   /// DELETE ITEM FROM ROUTINE
   void deleteItemFromRoutine({required String routineId, required index}) {
     Routine? currRoutine = getRoutineById(routineId);
-    if (currRoutine.isNotNull) {
+    if (currRoutine != null) {
       currRoutine!.routineList.removeAt(index);
     }
     notifyListeners();
@@ -135,6 +134,8 @@ class RoutinesViewModel extends ChangeNotifier {
       required int newIndex,
       required String routineId}) {
     // an adjustment needed when its on the edge
+    print('old index $oldIndex');
+    print('new index $newIndex');
     if (oldIndex < newIndex) {
       newIndex--;
     }

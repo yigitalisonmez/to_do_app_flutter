@@ -9,7 +9,8 @@ class TaskTile extends StatelessWidget {
   final deleteTaskCallback;
   final editTaskCallback;
 
-  TaskTile({
+  const TaskTile({
+    super.key,
     required this.isChecked,
     required this.taskTitle,
     required this.checkboxCallback,
@@ -20,11 +21,10 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 2),
+      margin: const EdgeInsets.symmetric(vertical: 2),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(12), boxShadow: []),
       child: ListTile(
-        onLongPress: editTaskCallback,
         title: Text(
           taskTitle,
           style: TextStyle(
@@ -38,7 +38,7 @@ class TaskTile extends StatelessWidget {
         ),
         trailing: IconButton(
           onPressed: deleteTaskCallback,
-          icon: Icon(
+          icon: const Icon(
             Icons.delete,
             color: Color(0xffd94d3c),
           ),

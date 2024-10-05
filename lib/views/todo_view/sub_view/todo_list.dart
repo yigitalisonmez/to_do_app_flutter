@@ -4,7 +4,7 @@ Widget _getTodoList(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance
         .collection('todos')
-        .orderBy('time', descending: true)
+        .orderBy('index')
         .snapshots(),
     builder: (BuildContext ctx, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -19,11 +19,15 @@ Widget _getTodoList(BuildContext context) {
       }
       int snapshotSize = snapshot.data!.size;
       Provider.of<TodoViewModel>(context).todoNumber = snapshotSize;
-      return ListView.builder(
+      return ReorderableListView.builder(
+        onReorder: (int oldIndex, int newIndex) =>
+            Provider.of<TodoViewModel>(context, listen: false)
+                .reorderTodos(oldIndex, newIndex),
         itemCount: Provider.of<TodoViewModel>(context).todoNumber,
         itemBuilder: (_, int index) {
           dynamic currentTask = snapshot.data!.docs[index].data();
           return TaskTile(
+            key: ValueKey(index),
             isChecked: currentTask['todoState'],
             taskTitle: currentTask['todoDescription'],
             checkboxCallback: (status) {
@@ -68,9 +72,9 @@ Widget _getTodoList(BuildContext context) {
                                   Provider.of<TodoViewModel>(context,
                                           listen: false)
                                       .editTask(
-                                          uuid: currentTask['uuid'],
-                                          newTodoDescription:
-                                              newTaskDescription!);
+                                    uuid: currentTask['uuid'],
+                                    newTodoDescription: newTaskDescription,
+                                  );
 
                                   Navigator.pop(context);
                                 },
@@ -127,6 +131,74 @@ Widget _buildTodoShimmer() {
             ),
           ],
         ),
+      );
+    },
+  );
+}
+
+Widget getTodoList(BuildContext context, DailyTask dailyTask) {
+  String dateToday = DateTimeEx.dateToString(DateTime.now());
+  return ListView.builder(
+    itemCount: Provider.of<DailyTasksViewModel>(context).taskNumber,
+    itemBuilder: (_, int index) {
+      Task currentTask = dailyTask.tasks[index];
+      return TaskTile(
+        key: ValueKey(index),
+        isChecked: currentTask.isDone,
+        taskTitle: currentTask.title,
+        checkboxCallback: (status) {
+          Provider.of<DailyTasksViewModel>(context, listen: false)
+              .updateTaskStatus(key: dailyTask.id, taskIdx: index);
+        },
+        deleteTaskCallback: () {
+          Provider.of<DailyTasksViewModel>(context, listen: false)
+              .deleteTask(date: dateToday, index: index);
+        },
+        editTaskCallback: () {
+          String newTaskTitle = currentTask.title;
+          _textEditingController.text = newTaskTitle;
+          showDialog(
+              context: context,
+              builder: (builder) => Dialog(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Enter new task description'),
+                          const SizedBox(height: 15),
+                          TextField(
+                            controller: _textEditingController,
+                            cursorColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            autofocus: true,
+                            textAlign: TextAlign.center,
+                            onChanged: (value) {
+                              newTaskTitle = value;
+                            },
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              /// TODO updated task reward will be asked to user to enter.
+                              Provider.of<DailyTasksViewModel>(context,
+                                      listen: false)
+                                  .updateTask(
+                                      updatedTaskTitle: newTaskTitle,
+                                      updatedTaskReward: 50,
+                                      key: dailyTask.id,
+                                      taskIdx: index);
+
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Submit'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ));
+        },
       );
     },
   );

@@ -44,13 +44,14 @@ _buildAddTodoBottomSheet(BuildContext context) {
                       // pop the context
                       Navigator.pop(context);
                       // add a task
-                      Provider.of<TodoViewModel>(context, listen: false)
+                      Provider.of<DailyTasksViewModel>(context, listen: false)
                           .addTask(
-                        Todo(
-                          todoDescription: _textEditingController.text,
-                          time: DateTime.now(),
-                          todoState: false,
+                        newTask: Task(
+                          title: _textEditingController.text,
+                          isDone: false,
+                          date: DateTime.now(),
                         ),
+                        date: DateTimeEx.dateToString(DateTime.now()),
                       );
 
                       // clear text editing controller for next task

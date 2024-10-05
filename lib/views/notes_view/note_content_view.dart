@@ -107,7 +107,6 @@ class _NoteContentViewState extends State<NoteContentView> {
                   configurations: QuillEditorConfigurations(
                     showCursor: true,
                     controller: _controller,
-                    readOnly: false,
                     sharedConfigurations: const QuillSharedConfigurations(
                       locale: Locale('de'),
                     ),

@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grock/grock.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
 import 'package:todoey_flutter/helpers/widgets/task_tile.dart';
+import 'package:todoey_flutter/models/daily_task/daily_task.dart';
 import 'package:todoey_flutter/models/todo/todo.dart';
+import 'package:todoey_flutter/view_models/daily_tasks_view_model.dart';
 import 'package:todoey_flutter/view_models/todo_view_model.dart';
 
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
@@ -25,7 +28,7 @@ final formKey = GlobalKey<FormState>();
 class TodoView extends StatefulWidget {
   static String path = '/todo-view';
 
-  TodoView({super.key});
+  const TodoView({super.key});
 
   @override
   State<TodoView> createState() => _TodoViewState();
@@ -34,6 +37,7 @@ class TodoView extends StatefulWidget {
 class _TodoViewState extends State<TodoView> {
   @override
   Widget build(BuildContext context) {
+    String todayAsStr = DateTimeEx.dateToString(DateTime.now());
     return Scaffold(
       appBar: AppBar(),
       drawer: const MyDrawer(),
@@ -70,7 +74,7 @@ class _TodoViewState extends State<TodoView> {
                       fontFamily: 'DotGothic16'),
                 ),
                 Text(
-                  '${Provider.of<TodoViewModel>(context, listen: true).todoNumber} Tasks',
+                  '${Provider.of<DailyTasksViewModel>(context).taskNumber} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
@@ -85,9 +89,13 @@ class _TodoViewState extends State<TodoView> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: Provider.of<TodoViewModel>(context).isLoading
-                  ? _buildTodoShimmer()
-                  : _getTodoList(context),
+              child: Provider.of<DailyTasksViewModel>(context, listen: false)
+                      .isLoading
+                  ? Container()
+                  : getTodoList(
+                      context,
+                      Provider.of<DailyTasksViewModel>(context, listen: false)
+                          .getDailyTask(todayAsStr)!),
             ),
           ),
         ],
@@ -95,3 +103,8 @@ class _TodoViewState extends State<TodoView> {
     );
   }
 }
+
+/*
+child: Provider.of<TodoViewModel>(context).isLoading
+? _buildTodoShimmer()
+    : _getTodoList(context),*/
