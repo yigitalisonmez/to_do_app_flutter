@@ -105,7 +105,4 @@ class DailyTasksViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  ///Delete
-  /// DON'T NEED TO DELETE A DAILY TASK GROUP
 }

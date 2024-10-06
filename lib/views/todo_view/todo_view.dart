@@ -1,22 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grock/grock.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
 import 'package:todoey_flutter/helpers/widgets/task_tile.dart';
 import 'package:todoey_flutter/models/daily_task/daily_task.dart';
-import 'package:todoey_flutter/models/todo/todo.dart';
 import 'package:todoey_flutter/view_models/daily_tasks_view_model.dart';
-import 'package:todoey_flutter/view_models/todo_view_model.dart';
-
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 part 'package:todoey_flutter/views/todo_view/sub_view/custom_drawer.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/navigation_bar.dart';
 part 'package:todoey_flutter/views/todo_view/sub_view/todo_list.dart';
@@ -89,8 +83,7 @@ class _TodoViewState extends State<TodoView> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: Provider.of<DailyTasksViewModel>(context, listen: false)
-                      .isLoading
+              child: Provider.of<DailyTasksViewModel>(context).isLoading
                   ? Container()
                   : getTodoList(
                       context,
@@ -103,8 +96,3 @@ class _TodoViewState extends State<TodoView> {
     );
   }
 }
-
-/*
-child: Provider.of<TodoViewModel>(context).isLoading
-? _buildTodoShimmer()
-    : _getTodoList(context),*/

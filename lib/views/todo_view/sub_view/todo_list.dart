@@ -1,96 +1,46 @@
 part of '../todo_view.dart';
 
-Widget _getTodoList(BuildContext context) {
-  return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance
-        .collection('todos')
-        .orderBy('index')
-        .snapshots(),
-    builder: (BuildContext ctx, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-        return const Center(
-          child: Text('No Task for now'),
-        );
-      }
-      int snapshotSize = snapshot.data!.size;
-      Provider.of<TodoViewModel>(context).todoNumber = snapshotSize;
-      return ReorderableListView.builder(
-        onReorder: (int oldIndex, int newIndex) =>
-            Provider.of<TodoViewModel>(context, listen: false)
-                .reorderTodos(oldIndex, newIndex),
-        itemCount: Provider.of<TodoViewModel>(context).todoNumber,
-        itemBuilder: (_, int index) {
-          dynamic currentTask = snapshot.data!.docs[index].data();
-          return TaskTile(
-            key: ValueKey(index),
-            isChecked: currentTask['todoState'],
-            taskTitle: currentTask['todoDescription'],
-            checkboxCallback: (status) {
-              Provider.of<TodoViewModel>(context, listen: false)
-                  .changeTaskStatus(
-                uuid: currentTask['uuid'],
-                currTaskState: currentTask['todoState'],
-              );
-            },
-            deleteTaskCallback: () {
-              Provider.of<TodoViewModel>(context, listen: false)
-                  .deleteTask(uuid: currentTask['uuid']);
-            },
-            editTaskCallback: () {
-              String newTaskDescription = currentTask['todoDescription'];
-              _textEditingController.text = newTaskDescription;
-              showDialog(
-                  context: context,
-                  builder: (builder) => Dialog(
-                        backgroundColor:
-                            Theme.of(context).scaffoldBackgroundColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('Enter new task description'),
-                              const SizedBox(height: 15),
-                              TextField(
-                                controller: _textEditingController,
-                                cursorColor:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                autofocus: true,
-                                textAlign: TextAlign.center,
-                                onChanged: (value) {
-                                  newTaskDescription = value;
-                                },
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Provider.of<TodoViewModel>(context,
-                                          listen: false)
-                                      .editTask(
-                                    uuid: currentTask['uuid'],
-                                    newTodoDescription: newTaskDescription,
-                                  );
+/*void _buildEditTaskView(BuildContext context, Task currentTask) {
+  String newTaskDescription = currentTask['todoDescription'];
+  _textEditingController.text = newTaskDescription;
+  showDialog(
+      context: context,
+      builder: (builder) => Dialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Enter new task description'),
+                  const SizedBox(height: 15),
+                  TextField(
+                    controller: _textEditingController,
+                    cursorColor: Theme.of(context).scaffoldBackgroundColor,
+                    autofocus: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      newTaskDescription = value;
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Provider.of<TodoViewModel>(context, listen: false)
+                          .editTask(
+                        uuid: currentTask['uuid'],
+                        newTodoDescription: newTaskDescription,
+                      );
 
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('Submit'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ));
-            },
-          );
-        },
-      );
-    },
-  );
-}
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
+            ),
+          ));
+}*/
 
 Widget _buildTodoShimmer() {
   return ListView.builder(
@@ -138,68 +88,80 @@ Widget _buildTodoShimmer() {
 
 Widget getTodoList(BuildContext context, DailyTask dailyTask) {
   String dateToday = DateTimeEx.dateToString(DateTime.now());
-  return ListView.builder(
-    itemCount: Provider.of<DailyTasksViewModel>(context).taskNumber,
-    itemBuilder: (_, int index) {
-      Task currentTask = dailyTask.tasks[index];
-      return TaskTile(
-        key: ValueKey(index),
-        isChecked: currentTask.isDone,
-        taskTitle: currentTask.title,
-        checkboxCallback: (status) {
-          Provider.of<DailyTasksViewModel>(context, listen: false)
-              .updateTaskStatus(key: dailyTask.id, taskIdx: index);
-        },
-        deleteTaskCallback: () {
-          Provider.of<DailyTasksViewModel>(context, listen: false)
-              .deleteTask(date: dateToday, index: index);
-        },
-        editTaskCallback: () {
-          String newTaskTitle = currentTask.title;
-          _textEditingController.text = newTaskTitle;
-          showDialog(
-              context: context,
-              builder: (builder) => Dialog(
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Enter new task description'),
-                          const SizedBox(height: 15),
-                          TextField(
-                            controller: _textEditingController,
-                            cursorColor:
-                                Theme.of(context).scaffoldBackgroundColor,
-                            autofocus: true,
-                            textAlign: TextAlign.center,
-                            onChanged: (value) {
-                              newTaskTitle = value;
-                            },
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              /// TODO updated task reward will be asked to user to enter.
-                              Provider.of<DailyTasksViewModel>(context,
-                                      listen: false)
-                                  .updateTask(
-                                      updatedTaskTitle: newTaskTitle,
-                                      updatedTaskReward: 50,
-                                      key: dailyTask.id,
-                                      taskIdx: index);
+  return Provider.of<DailyTasksViewModel>(context).taskNumber == 0
+      ? Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Nothing to see here...',
+              ),
+            ],
+          ),
+        )
+      : ListView.builder(
+          itemCount: Provider.of<DailyTasksViewModel>(context).taskNumber,
+          itemBuilder: (_, int index) {
+            Task currentTask = dailyTask.tasks[index];
+            return TaskTile(
+              key: ValueKey(index),
+              isChecked: currentTask.isDone,
+              taskTitle: currentTask.title,
+              checkboxCallback: (status) {
+                Provider.of<DailyTasksViewModel>(context, listen: false)
+                    .updateTaskStatus(key: dailyTask.id, taskIdx: index);
+              },
+              deleteTaskCallback: () {
+                Provider.of<DailyTasksViewModel>(context, listen: false)
+                    .deleteTask(date: dateToday, index: index);
+              },
+              editTaskCallback: () {
+                String newTaskTitle = currentTask.title;
+                _textEditingController.text = newTaskTitle;
+                showDialog(
+                    context: context,
+                    builder: (builder) => Dialog(
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Enter new task description'),
+                                const SizedBox(height: 15),
+                                TextField(
+                                  controller: _textEditingController,
+                                  cursorColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  autofocus: true,
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    newTaskTitle = value;
+                                  },
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    /// TODO updated task reward will be asked to user to enter.
+                                    Provider.of<DailyTasksViewModel>(context,
+                                            listen: false)
+                                        .updateTask(
+                                            updatedTaskTitle: newTaskTitle,
+                                            updatedTaskReward: 50,
+                                            key: dailyTask.id,
+                                            taskIdx: index);
 
-                              Navigator.pop(context);
-                            },
-                            child: const Text('Submit'),
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Submit'),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ));
-        },
-      );
-    },
-  );
+                        ));
+              },
+            );
+          },
+        );
 }

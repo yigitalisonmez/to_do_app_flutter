@@ -43,7 +43,7 @@ class TaskTile extends StatelessWidget {
             color: Color(0xffd94d3c),
           ),
         ),
-        //style: ListTileStyle(),
+        onLongPress: editTaskCallback,
       ),
     );
   }

@@ -23,6 +23,7 @@ _buildAddTodoBottomSheet(BuildContext context) {
 
               /// TEXT FIELD
               TextFormField(
+                keyboardType: TextInputType.name,
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||

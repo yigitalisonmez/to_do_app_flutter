@@ -23,7 +23,6 @@ class RoutinesViewModel extends ChangeNotifier {
   void _initRoutineBox() async {
     routinesBox = await Hive.openBox('routines');
     getAllRoutines();
-    notifyListeners();
   }
 
   void toggleIsOpen(ValueNotifier<bool> isOpen, Routine routine, int index) {
