@@ -21,7 +21,7 @@ class _RoutineCardState extends State<RoutineCard> {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: palette[1],
+            color: Colors.black12,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -161,7 +161,7 @@ class RoutineTile extends StatelessWidget {
           ),
           tileColor: Theme.of(context).colorScheme.secondary,
           leading: Checkbox(
-            fillColor: MaterialStateProperty.all(palette[2]),
+            fillColor: MaterialStateProperty.all(Colors.black54),
             value: Provider.of<RoutinesViewModel>(context)
                 .getRoutineById(routineId)!
                 .routineList[index]

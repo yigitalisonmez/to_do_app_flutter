@@ -15,10 +15,8 @@ import 'package:todoey_flutter/views/routines_view/routines_view.dart';
 import 'package:todoey_flutter/views/splash_view/splash_view.dart';
 import 'package:todoey_flutter/views/test_view.dart';
 import 'package:todoey_flutter/views/todo_view/todo_view.dart';
-
-import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -34,10 +32,10 @@ void main() async {
   Hive.registerAdapter(DailyTaskAdapter());
   Hive.registerAdapter(TaskAdapter());
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  runApp(ChangeNotifierProvider(
-      create: (context) => ThemeProvider(), child: const MyApp()));
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => ThemeProvider(), child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

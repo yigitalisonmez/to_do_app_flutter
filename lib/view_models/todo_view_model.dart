@@ -22,14 +22,11 @@ class TodoViewModel extends ChangeNotifier {
     try {
       documents = await collection.orderBy('index').get();
       todoNumber = documents!.size;
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 300));
       isLoading = false;
       notifyListeners();
     } catch (e) {
       print(e);
-    }
-    for (var o in documents!.docs) {
-      print('ids:  ${o.get('uuid')}');
     }
   }
 
@@ -81,8 +78,6 @@ class TodoViewModel extends ChangeNotifier {
         changingDocument = doc;
         break;
       }
-      print('uuid:${doc.get('uuid')}');
-      print('index: ${doc.get('index')}');
     }
 
     if (oldIndex < newIndex) {

@@ -40,7 +40,6 @@ class DailyTasksViewModel extends ChangeNotifier {
   ///Create
   void createDailyTask(DailyTask dailyTask) {
     dailyTaskBox.put(DateTimeEx.dateToString(dailyTask.date), dailyTask);
-    notifyListeners();
   }
 
   /// READ

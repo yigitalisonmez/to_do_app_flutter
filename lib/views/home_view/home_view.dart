@@ -12,7 +12,7 @@ class HomeView extends StatefulWidget {
   static String path = '/home-view';
   int _selectedIndex = 1;
   List<Widget> screens = [
-    TodoView(),
+    const TodoView(),
     NotesView(),
     const RoutinesView(),
   ];
@@ -46,14 +46,11 @@ class _HomeViewState extends State<HomeView> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: GNav(
-//          backgroundColor: Theme.of(context).colorScheme.background ,
-          tabBackgroundColor: Colors.grey.shade800,
+          tabBackgroundColor: kSecondaryColor,
           rippleColor:
               Colors.grey.shade800, // tab button ripple color when pressed
           hoverColor: Colors.grey.shade700, // tab button hover color
           haptic: true, // haptic feedback
-          tabActiveBorder:
-              Border.all(color: Colors.black, width: 0.6), // tab button border
           // tab button shadow
           curve: Curves.linear,
           duration: const Duration(milliseconds: 250), // tab animation duration

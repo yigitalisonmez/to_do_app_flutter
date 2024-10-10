@@ -28,6 +28,7 @@ class _RoutinesViewState extends State<RoutinesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kPrimaryColor,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -47,6 +48,10 @@ class _RoutinesViewState extends State<RoutinesView> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _buildBottomSheet(context, formKey),
+        child: const Icon(
+          Icons.add,
+          color: kTertiaryColor,
+        ),
       ),
     );
   }

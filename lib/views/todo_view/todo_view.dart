@@ -36,7 +36,7 @@ class _TodoViewState extends State<TodoView> {
       appBar: AppBar(),
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton(
-          child: const Icon(CupertinoIcons.add, color: Colors.white),
+          child: const Icon(CupertinoIcons.add, color: kTertiaryColor),
           onPressed: () => _buildAddTodoBottomSheet(context)),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

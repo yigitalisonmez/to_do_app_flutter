@@ -25,33 +25,32 @@ const kTaskListBackgroundLight = Color(0xfffff1eb);
 const kShimmerBaseColor = Colors.grey;
 const kShimmerHighlightColor = Colors.white60;
 
-const List<Color> palette = [
-  Color(0xff070F2B),
-  Color(0xff1B1A55),
-  Color(0xff535C91),
-  Color(0xff9290C3),
-];
-
 const List<Color> cardColors = [
   Color(0xfff5f378),
   Color(0xffdcc1ff),
   Color(0xffec704b)
 ];
 
+const kBgColor = Color(0xff6A9C89);
+const kPrimaryColor = Color(0xff16423C);
+const kSecondaryColor = Color(0xff5d8978);
+const kTertiaryColor = Color(0xffE9EFEC);
+const realColor = Color.fromARGB(255, 200, 238, 224);
+
 /// DARK THEME
 ThemeData darkMode = ThemeData(
   textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
   brightness: Brightness.dark,
-  primaryColor: const Color(0xff1a1a1a),
+  primaryColor: kPrimaryColor,
 
   colorScheme: const ColorScheme.dark(
     brightness: Brightness.dark,
-    background: kBackgroundColorDark,
-    primary: kPrimaryColorDark,
-    secondary: kSecondaryColorDark,
+    background: kBgColor,
+    primary: kPrimaryColor,
+    secondary: kSecondaryColor,
     tertiary: kTertiaryColorDark,
   ),
-  scaffoldBackgroundColor: kScaffoldBackgroundColorDark,
+  scaffoldBackgroundColor: kBgColor,
 
   /// TEXT THEME
   textTheme: const TextTheme(
@@ -63,7 +62,7 @@ ThemeData darkMode = ThemeData(
 
   ///FLOATING ACTION BUTTON
   floatingActionButtonTheme:
-      const FloatingActionButtonThemeData(backgroundColor: kSecondaryColorDark),
+      const FloatingActionButtonThemeData(backgroundColor: kSecondaryColor),
 
   ///CHECKBOX
   checkboxTheme: CheckboxThemeData(
@@ -90,7 +89,10 @@ ThemeData darkMode = ThemeData(
   ),
 
   ///APP BAR THEME
-  appBarTheme: const AppBarTheme(backgroundColor: kScaffoldBackgroundColorDark),
+  appBarTheme: const AppBarTheme(backgroundColor: kSecondaryColor),
+
+  drawerTheme:
+      const DrawerThemeData(backgroundColor: kSecondaryColor, elevation: 4.0),
 
   /// DIALOG THEME
   dialogTheme: const DialogTheme(
@@ -109,6 +111,7 @@ ThemeData darkMode = ThemeData(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
   ),
 );
+//------------------------------------------------------------------------------
 
 ThemeData lightMode = ThemeData(
   textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.black),
