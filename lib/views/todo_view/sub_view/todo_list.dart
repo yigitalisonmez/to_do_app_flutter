@@ -88,19 +88,27 @@ Widget _buildTodoShimmer() {
 
 Widget getTodoList(BuildContext context, DailyTask dailyTask) {
   String dateToday = DateTimeEx.dateToString(DateTime.now());
-  return Provider.of<DailyTasksViewModel>(context).taskNumber == 0
-      ? Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Nothing to see here...',
-              ),
-            ],
-          ),
+  return Provider.of<DailyTasksViewModel>(context)
+          .dailyTaskBox
+          .values
+          .last
+          .tasks
+          .isEmpty
+      ? const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Nothing to see here...',
+            ),
+          ],
         )
       : ListView.builder(
-          itemCount: Provider.of<DailyTasksViewModel>(context).taskNumber,
+          itemCount: Provider.of<DailyTasksViewModel>(context)
+              .dailyTaskBox
+              .values
+              .last
+              .tasks
+              .length,
           itemBuilder: (_, int index) {
             Task currentTask = dailyTask.tasks[index];
             return TaskTile(

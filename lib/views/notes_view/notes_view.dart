@@ -17,9 +17,6 @@ class NotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final noteData = Provider.of<NotesViewModel>(context);
-    if (noteData.boxLength == -1) {
-      return const Center(child: CircularProgressIndicator());
-    }
 
     return Scaffold(
       appBar: AppBar(

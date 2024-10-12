@@ -35,7 +35,6 @@ const kBgColor = Color(0xff6A9C89);
 const kPrimaryColor = Color(0xff16423C);
 const kSecondaryColor = Color(0xff5d8978);
 const kTertiaryColor = Color(0xffE9EFEC);
-const realColor = Color.fromARGB(255, 200, 238, 224);
 
 /// DARK THEME
 ThemeData darkMode = ThemeData(

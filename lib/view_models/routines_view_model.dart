@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:grock/grock.dart';
+import 'package:todoey_flutter/helpers/console_color.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:hive/hive.dart';
 import 'package:todoey_flutter/models/routine/routine_item.dart';
@@ -6,6 +8,7 @@ import 'package:uuid/uuid.dart';
 
 class RoutinesViewModel extends ChangeNotifier {
   late Box<Routine> routinesBox;
+  static late Box<Routine> _routinesBox;
 
   String selectedRoutineName = '';
   DayTime selectedDayTime = DayTime.Morning;
@@ -18,11 +21,14 @@ class RoutinesViewModel extends ChangeNotifier {
   ];
 
   RoutinesViewModel() {
-    _initRoutineBox();
+    routinesBox = _routinesBox;
   }
-  void _initRoutineBox() async {
-    routinesBox = await Hive.openBox('routines');
-    getAllRoutines();
+
+  static Future<void> initRoutineBox() async {
+    ConsoleColor.printInColor("Fonksiyona girildi", ConsoleColor.green);
+    ConsoleColor.printInColor("starting to initialize", ConsoleColor.green);
+    _routinesBox = await Hive.openBox('routines');
+    ConsoleColor.printInColor("RoutineBox initiated", ConsoleColor.green);
   }
 
   void toggleIsOpen(ValueNotifier<bool> isOpen, Routine routine, int index) {
@@ -76,10 +82,6 @@ class RoutinesViewModel extends ChangeNotifier {
 
   /// GET ROUTINES
   dynamic getAllRoutines() {
-    for (var key in routinesBox.keys) {
-      print(key);
-      print(routinesBox.get(key)!.id);
-    }
     return routinesBox.values;
   }
 
@@ -133,8 +135,6 @@ class RoutinesViewModel extends ChangeNotifier {
       required int newIndex,
       required String routineId}) {
     // an adjustment needed when its on the edge
-    print('old index $oldIndex');
-    print('new index $newIndex');
     if (oldIndex < newIndex) {
       newIndex--;
     }

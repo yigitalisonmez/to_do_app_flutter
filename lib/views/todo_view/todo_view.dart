@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grock/grock.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
@@ -68,7 +69,7 @@ class _TodoViewState extends State<TodoView> {
                       fontFamily: 'DotGothic16'),
                 ),
                 Text(
-                  '${Provider.of<DailyTasksViewModel>(context).taskNumber} Tasks',
+                  '${Provider.of<DailyTasksViewModel>(context).dailyTaskBox.values.last.tasks.length} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
@@ -83,12 +84,10 @@ class _TodoViewState extends State<TodoView> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: Provider.of<DailyTasksViewModel>(context).isLoading
-                  ? Container()
-                  : getTodoList(
-                      context,
-                      Provider.of<DailyTasksViewModel>(context, listen: false)
-                          .getDailyTask(todayAsStr)!),
+              child: getTodoList(
+                  context,
+                  Provider.of<DailyTasksViewModel>(context, listen: false)
+                      .getDailyTask(todayAsStr)!),
             ),
           ),
         ],

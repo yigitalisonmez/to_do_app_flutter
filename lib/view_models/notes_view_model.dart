@@ -3,22 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todoey_flutter/models/note/note.dart';
 
+import '../helpers/console_color.dart';
+
 class NotesViewModel extends ChangeNotifier {
   late Box<Note> noteBox;
+  static late Box<Note> _noteBox;
+
+  int selectedIndex = -1;
 
   NotesViewModel() {
-    _initNoteBox();
+    noteBox = _noteBox;
   }
 
-  int boxLength = -1;
-  int selectedIndex = -1;
+  static Future<void> initNoteBox() async {
+    ConsoleColor.printInColor(
+        "Starting to initialize noteBox...", ConsoleColor.red);
+    _noteBox = await Hive.openBox('my_notes');
+    ConsoleColor.printInColor("Done!", ConsoleColor.red);
+  }
 
   ///BASIC CRUD OPERATIONS
 
   // Add note
   void addNote(Note newNote) {
     noteBox.add(newNote);
-    boxLength++;
+
     notifyListeners();
   }
 
@@ -36,7 +45,6 @@ class NotesViewModel extends ChangeNotifier {
   // Delete note
   void deleteNoteAt(int index) {
     noteBox.deleteAt(index);
-    boxLength--;
     notifyListeners();
   }
 
@@ -45,12 +53,6 @@ class NotesViewModel extends ChangeNotifier {
     Note note = getNote(index)!;
     note.content = newNote.content;
     noteBox.putAt(index, note);
-    notifyListeners();
-  }
-
-  void _initNoteBox() async {
-    noteBox = await Hive.openBox('my_notes');
-    boxLength = noteBox.length;
     notifyListeners();
   }
 }
