@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 const BoxDecoration cardStyle1 = BoxDecoration(color: Colors.green);
 const BoxDecoration cardStyle2 = BoxDecoration(color: Colors.grey);
 
-class NoteCard extends StatelessWidget {
+class DecoratedNoteCard extends StatelessWidget {
   final String title;
   final Color color;
   final Color textColor;
@@ -13,7 +13,7 @@ class NoteCard extends StatelessWidget {
   final VoidCallback onLongPress;
   String content = '';
 
-  NoteCard({
+  DecoratedNoteCard({
     super.key,
     required this.content,
     required this.title,
@@ -32,8 +32,20 @@ class NoteCard extends StatelessWidget {
       child: Container(
         height: height,
         decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
+            width: 1.0,
+          ),
           color: color,
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
+          ),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(6, 6),
+              color: Colors.black,
+            ),
+          ],
         ),
         child: Center(
             child: Column(

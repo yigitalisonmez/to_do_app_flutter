@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:grock/grock.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/theme_provider.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
+import 'package:todoey_flutter/helpers/widgets/shadowed_button.dart';
 import 'package:todoey_flutter/helpers/widgets/task_tile.dart';
 import 'package:todoey_flutter/models/daily_task/daily_task.dart';
 import 'package:todoey_flutter/view_models/daily_tasks_view_model.dart';
@@ -32,13 +34,16 @@ class TodoView extends StatefulWidget {
 class _TodoViewState extends State<TodoView> {
   @override
   Widget build(BuildContext context) {
+    dynamic dailyTaskBoxValues =
+        Provider.of<DailyTasksViewModel>(context).dailyTaskBox.values;
     String todayAsStr = DateTimeEx.dateToString(DateTime.now());
     return Scaffold(
       appBar: AppBar(),
       drawer: const MyDrawer(),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(CupertinoIcons.add, color: kTertiaryColor),
-          onPressed: () => _buildAddTodoBottomSheet(context)),
+      floatingActionButton: ShadowedButton(
+        iconData: Icons.add,
+        onPressed: () => _buildAddTodoBottomSheet(context),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,7 +74,7 @@ class _TodoViewState extends State<TodoView> {
                       fontFamily: 'DotGothic16'),
                 ),
                 Text(
-                  '${Provider.of<DailyTasksViewModel>(context).dailyTaskBox.values.last.tasks.length} Tasks',
+                  '${dailyTaskBoxValues.isEmpty ? 0 : dailyTaskBoxValues.last.tasks.length} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
@@ -84,10 +89,18 @@ class _TodoViewState extends State<TodoView> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: getTodoList(
-                  context,
-                  Provider.of<DailyTasksViewModel>(context, listen: false)
-                      .getDailyTask(todayAsStr)!),
+              child: Stack(
+                children: [
+                  Opacity(
+                    opacity: 0.3,
+                    child: Image.asset('assets/illustration/todo_ill.png'),
+                  ),
+                  getTodoList(
+                      context,
+                      Provider.of<DailyTasksViewModel>(context, listen: false)
+                          .getDailyTask(todayAsStr)!),
+                ],
+              ),
             ),
           ),
         ],

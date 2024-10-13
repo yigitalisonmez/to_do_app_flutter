@@ -20,17 +20,17 @@ class HomeView extends StatefulWidget {
     const GButton(
       icon: Icons.home_outlined,
       text: 'Home',
-      iconColor: Colors.white,
+      iconColor: kIconColor,
     ),
     const GButton(
       icon: Icons.menu_book,
       text: 'Notes',
-      iconColor: Colors.white,
+      iconColor: kIconColor,
     ),
     const GButton(
       icon: Icons.calendar_today,
       text: 'Profile',
-      iconColor: Colors.white,
+      iconColor: kIconColor,
     )
   ];
 
@@ -56,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
           duration: const Duration(milliseconds: 250), // tab animation duration
           gap: 8, // the tab button gap between icon and text
           color: Colors.grey[800], // unselected icon color
-          activeColor: Colors.white, // selected icon and text color
+          activeColor: kIconColor, // selected icon and text color
           iconSize: 26, // tab button icon size
           // selected tab background color
           padding: const EdgeInsets.all(12),

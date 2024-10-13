@@ -31,10 +31,12 @@ const List<Color> cardColors = [
   Color(0xffec704b)
 ];
 
-const kBgColor = Color(0xff6A9C89);
-const kPrimaryColor = Color(0xff16423C);
-const kSecondaryColor = Color(0xff5d8978);
-const kTertiaryColor = Color(0xffE9EFEC);
+const kBgColor = Color(0xff303642);
+const kPrimaryColor = Color(0xff3d4552);
+const kSecondaryColor = Color(0xffff7461);
+const kTertiaryColor = Color(0xff002379);
+const kAppBarcolor = Color(0xff5b6370);
+const kIconColor = Colors.white;
 
 /// DARK THEME
 ThemeData darkMode = ThemeData(
@@ -88,10 +90,10 @@ ThemeData darkMode = ThemeData(
   ),
 
   ///APP BAR THEME
-  appBarTheme: const AppBarTheme(backgroundColor: kSecondaryColor),
+  appBarTheme: const AppBarTheme(backgroundColor: kAppBarcolor),
 
   drawerTheme:
-      const DrawerThemeData(backgroundColor: kSecondaryColor, elevation: 4.0),
+      const DrawerThemeData(backgroundColor: kPrimaryColor, elevation: 4.0),
 
   /// DIALOG THEME
   dialogTheme: const DialogTheme(

@@ -6,6 +6,7 @@ import 'package:grock/grock.dart';
 import 'package:todoey_flutter/helpers/theme_constants.dart';
 import 'package:todoey_flutter/helpers/widgets/confirmation_dialog.dart';
 import 'package:todoey_flutter/helpers/widgets/custom_modal_bottom_sheet.dart';
+import 'package:todoey_flutter/helpers/widgets/shadowed_button.dart';
 import 'package:todoey_flutter/models/routine/routine.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/view_models/routines_view_model.dart';
@@ -46,12 +47,9 @@ class _RoutinesViewState extends State<RoutinesView> {
                 .toList();
             return RoutineCard(routineId: routines[index].id);
           }),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: ShadowedButton(
         onPressed: () => _buildBottomSheet(context, formKey),
-        child: const Icon(
-          Icons.add,
-          color: kTertiaryColor,
-        ),
+        iconData: Icons.add,
       ),
     );
   }

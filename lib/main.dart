@@ -13,12 +13,10 @@ import 'package:todoey_flutter/view_models/todo_view_model.dart';
 import 'package:todoey_flutter/views/home_view/home_view.dart';
 import 'package:todoey_flutter/views/notes_view/notes_view.dart';
 import 'package:todoey_flutter/views/routines_view/routines_view.dart';
-import 'package:todoey_flutter/views/splash_view/splash_view.dart';
 import 'package:todoey_flutter/views/test_view.dart';
 import 'package:todoey_flutter/views/todo_view/todo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -84,11 +82,10 @@ class _MyAppState extends State<MyApp> {
         //routerConfig: _appRouter.config(),
         initialRoute: HomeView.path,
         routes: {
-          SplashView.path: (context) => const SplashView(),
           HomeView.path: (context) => HomeView(),
-          TodoView.path: (context) => TodoView(),
+          TodoView.path: (context) => const TodoView(),
           NotesView.path: (context) => NotesView(),
-          RoutinesView.path: (context) => RoutinesView(),
+          RoutinesView.path: (context) => const RoutinesView(),
           TestView.path: (context) => const TestView(),
         },
         debugShowCheckedModeBanner: false,
